@@ -8,32 +8,6 @@ import requests
 from PyPDF2 import PdfReader
 from concurrent.futures import ThreadPoolExecutor
 
-
-def download_to_s3(s3, url, bucket, object_name):
-    response = urllib.request.urlopen(url)
-    data = response.read()
-    s3.put_object(Body=data, Bucket=bucket, Key=object_name)
-    print(f"Uploaded {object_name.split('/')[-1]} to S3 bucket {bucket}.")
-
-def extract_data_from_pdf(s3, bucket_name, file_key):
-    try:
-        response = s3.get_object(Bucket=bucket_name, Key=file_key)
-        response = response['Body']
-        raw_data = b''
-        chunk_no = 1
-        for chunk in response.iter_chunks(chunk_size=1024*1024):
-            raw_data += chunk
-            chunk_no += 1
-        pdfreader = PdfReader(io.BytesIO(raw_data))
-        count = len(pdfreader.pages)
-        data = ""
-        for i in range(count):
-            page = pdfreader.pages[i]
-            data += page.extract_text()
-        return data
-    except Exception as e:
-        print(f"Unable to load file {file_key} because of the error {e}")
-
 def insert_record_into_dynamodb(dynamodb, class_info, subject_info, chapter_info, content, table):
     try:
         # Insert new record into DynamoDB table
@@ -48,21 +22,13 @@ def get_urls():
     base_url = "https://ncert.nic.in/textbook.php"
     source = requests.get(base_url).text
     excluded_subjects = [
-        'Health and Physical Education',
         'Hindi',
         'Sanskrit',
         'Urdu',
-        'Biotechnology',
-        'Computers and Communication Technology',
-        'Creative Writing and Translation',
         'Fine Art',
         'Graphics design',
         'Home Science',
-        'Knowledge Traditions Practices of India',
-        'Sangeet',
-        'Sociology',
-        'Psychology',
-        'Science'
+        'Sangeet'
     ]
     classes = source.split("//this function check the classthat you have selected")[1].split("function")[0].split("}")[1:-3]
     subjects = dict()

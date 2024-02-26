@@ -25,8 +25,10 @@ jobs:
 
       - name: Publish Lambda Layer
         run: |
-          LAYER_VERSION_ARN=$(aws lambda publish-layer-version --layer-name vector_db --description "Vector DB Layer" --zip-file fileb:///home/runner/work/AI-Scholar/AI-Scholar/src/Backend/Lambda\ Layer/vector_db.zip --compatible-runtimes python3.9 --region us-east-1 --query LayerVersionArn --output text)
-          echo "LAYER_VERSION_ARN=${LAYER_VERSION_ARN}" >> $GITHUB_ENV
+          VECTOR_DB_LAYER_VERSION_ARN=$(aws lambda publish-layer-version --layer-name vector_db --description "Vector DB Layer" --zip-file fileb:///home/runner/work/AI-Scholar/AI-Scholar/src/Backend/Lambda\ Layer/vector_db.zip --compatible-runtimes python3.9 --region us-east-1 --query LayerVersionArn --output text)
+          echo "VECTOR_DB_LAYER_VERSION_ARN=${VECTOR_DB_LAYER_VERSION_ARN}" >> $GITHUB_ENV
+          COMMON_LAYER_VERSION_ARN=$(aws lambda publish-layer-version --layer-name common_layer --description "Common Layer" --zip-file fileb:///home/runner/work/AI-Scholar/AI-Scholar/src/Backend/Lambda\ Layer/common_layer.zip --compatible-runtimes python3.9 --region us-east-1 --query LayerVersionArn --output text)
+          echo "COMMON_LAYER_VERSION_ARN=${COMMON_LAYER_VERSION_ARN}" >> $GITHUB_ENV
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -41,7 +43,7 @@ jobs:
 
       - name: Deploy SAM application
         run: |
-          sam deploy --template-file packaged.yaml --stack-name your-stack-name --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND --region your-aws-region --parameter-overrides LayerVersionArn=${{ env.LAYER_VERSION_ARN }}
+          sam deploy --template-file packaged.yaml --stack-name your-stack-name --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND --region your-aws-region --parameter-overrides VectorDBLayerVersionArn=${{ env.VECTOR_DB_LAYER_VERSION_ARN }} CommonLayerVersionArn=${{ env.COMMON_LAYER_VERSION_ARN }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
