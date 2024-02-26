@@ -21,7 +21,6 @@ def get_splits(text):
     return splitter.split_text(text)
 
 def get_vectorstore(splits):
-    os.environ["OPENAI_API_KEY"] = ''
     embedding = OpenAIEmbeddings(model="text-embedding-3-large")
     vectorstore = FAISS.from_texts(splits, embedding=embedding)
     return vectorstore
