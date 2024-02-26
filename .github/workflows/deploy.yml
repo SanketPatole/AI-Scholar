@@ -31,7 +31,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: your-aws-region # Remember to replace 'your-aws-region' with the actual AWS region
+          AWS_REGION: 'us-east-1'
 
       - name: Build SAM application
         run: sam build --template-file src/sam.yaml --base-dir . --use-container
