@@ -23,15 +23,15 @@ jobs:
           pip install awscli
           pip install aws-sam-cli
 
-      # Updated Publish Lambda Layer section to handle file path correctly
       - name: Publish Lambda Layer
         run: |
-          LAYER_VERSION_ARN=$(aws lambda publish-layer-version --layer-name vector_db --description "Vector DB Layer" --zip-file fileb://${{ github.workspace }}/src/Backend/Lambda\ Layer/vector_db.zip --compatible-runtimes python3.9 --query LayerVersionArn --output text)
+          LAYER_VERSION_ARN=$(aws lambda publish-layer-version --layer-name vector_db --description "Vector DB Layer" --zip-file fileb:///home/runner/work/AI-Scholar/AI-Scholar/src/Backend/Lambda\ Layer/vector_db.zip --compatible-runtimes python3.9 --region us-east-1 --query LayerVersionArn --output text)
           echo "LAYER_VERSION_ARN=${LAYER_VERSION_ARN}" >> $GITHUB_ENV
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'us-east-1'
+          AWS_REGION: us-east-1
+
 
       - name: Build SAM application
         run: sam build --template-file src/sam.yaml --base-dir . --use-container
