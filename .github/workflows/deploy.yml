@@ -23,15 +23,9 @@ jobs:
           pip install awscli
           pip install aws-sam-cli
 
-      - name: Package Lambda Layer
-        run: |
-          cd "src/Backend/Lambda Layer"
-          zip -r vector_db.zip vector_db
-          mv vector_db.zip ../../../
-
       - name: Publish Lambda Layer
         run: |
-          LAYER_VERSION_ARN=$(aws lambda publish-layer-version --layer-name vector_db --description "Vector DB Layer" --zip-file fileb://vector_db.zip --compatible-runtimes python3.9 --query LayerVersionArn --output text)
+          LAYER_VERSION_ARN=$(aws lambda publish-layer-version --layer-name vector_db --description "Vector DB Layer" --zip-file fileb://src/Backend/Lambda Layer/vector_db.zip --compatible-runtimes python3.9 --query LayerVersionArn --output text)
           echo "LAYER_VERSION_ARN=${LAYER_VERSION_ARN}" >> $GITHUB_ENV
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -51,4 +45,3 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: your-aws-region
-
