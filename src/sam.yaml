@@ -1,0 +1,82 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: An AWS Serverless Application Model template describing your function.
+
+Parameters:
+  LayerVersionArn:
+    Type: String
+    Description: ARN of the Lambda layer
+
+Resources:
+  Doubt_Solving_Api:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: Doubt_Solving_Api
+      StageName: prod
+      Cors:
+        AllowMethods: "'GET,POST,OPTIONS'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        AllowOrigin: "'*'"
+
+  DoubtSolving:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: Backend/Lambda/Features/Doubt_Solving/
+      Description: ''
+      MemorySize: 512
+      Timeout: 900
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.9
+      Architectures:
+        - x86_64
+      EphemeralStorage:
+        Size: 512
+      Environment:
+        Variables:
+          BUCKET_NAME: vectorstores-aiaces
+          OPENAI_API_KEY: sk-nFKhZhwo7
+      EventInvokeConfig:
+        MaximumEventAgeInSeconds: 21600
+        MaximumRetryAttempts: 2
+      Layers:
+        - !Ref LayerVersionArn
+      PackageType: Zip
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - logs:CreateLogGroup
+              Resource: arn:aws:logs:us-east-1:533267346877:*
+            - Effect: Allow
+              Action:
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+              Resource:
+                - 'arn:aws:logs:us-east-1:533267346877:log-group:/aws/lambda/Doubt_Solving:*'
+            - Effect: Allow
+              Action:
+                - s3:Get*
+                - s3:List*
+                - s3:Describe*
+                - s3-object-lambda:Get*
+                - s3-object-lambda:List*
+              Resource: '*'
+      SnapStart:
+        ApplyOn: None
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /Doubt_Solving
+            Method: ANY
+            RestApiId:
+              Ref: Doubt_Solving_Api
+        Api2:
+          Type: Api
+          Properties:
+            Path: /Doubt_Solving
+            Method: GET
+            RestApiId:
+              Ref: Doubt_Solving_Api
+      RuntimeManagementConfig:
+        UpdateRuntimeOn: Auto

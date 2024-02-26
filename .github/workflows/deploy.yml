@@ -1,0 +1,54 @@
+name: Deploy AWS Lambda and Layer
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install awscli
+          pip install aws-sam-cli
+
+      - name: Package Lambda Layer
+        run: |
+          cd "src/Backend/Lambda Layer"
+          zip -r vector_db.zip vector_db
+          mv vector_db.zip ../../../
+
+      - name: Publish Lambda Layer
+        run: |
+          LAYER_VERSION_ARN=$(aws lambda publish-layer-version --layer-name vector_db --description "Vector DB Layer" --zip-file fileb://vector_db.zip --compatible-runtimes python3.9 --query LayerVersionArn --output text)
+          echo "LAYER_VERSION_ARN=${LAYER_VERSION_ARN}" >> $GITHUB_ENV
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: your-aws-region # Make sure to replace 'your-aws-region' with the actual AWS region
+
+      - name: Build SAM application
+        run: sam build --template-file src/sam.yaml --base-dir . --use-container
+
+      - name: Package SAM application
+        run: sam package --output-template-file packaged.yaml --s3-bucket ${{ secrets.AWS_S3_BUCKET_FOR_SAM }}
+
+      - name: Deploy SAM application
+        run: |
+          sam deploy --template-file packaged.yaml --stack-name your-stack-name --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND --region your-aws-region --parameter-overrides LayerVersionArn=${{ env.LAYER_VERSION_ARN }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: your-aws-region
+

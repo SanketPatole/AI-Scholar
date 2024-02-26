@@ -1,0 +1,39 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-semicolons-dev-174016-authRole",
+      "UnauthRoleArn": "arn:aws:iam::025537956938:role/amplify-semicolons-dev-174016-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::025537956938:role/amplify-semicolons-dev-174016-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-semicolons-dev-174016-deployment",
+      "UnauthRoleName": "amplify-semicolons-dev-174016-unauthRole",
+      "StackName": "amplify-semicolons-dev-174016",
+      "StackId": "arn:aws:cloudformation:us-east-1:025537956938:stack/amplify-semicolons-dev-174016/30761960-cbfb-11ee-9843-0e60c51027df",
+      "AmplifyAppId": "d3l7ywxvitp7d4"
+    },
+    "categories": {
+      "auth": {
+        "semicolonsdd49bc58": {}
+      }
+    }
+  },
+  "semicolon": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-semicolons-semicolon-172226-authRole",
+      "UnauthRoleArn": "arn:aws:iam::533267346877:role/amplify-semicolons-semicolon-172226-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::533267346877:role/amplify-semicolons-semicolon-172226-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-semicolons-semicolon-172226-deployment",
+      "UnauthRoleName": "amplify-semicolons-semicolon-172226-unauthRole",
+      "StackName": "amplify-semicolons-semicolon-172226",
+      "StackId": "arn:aws:cloudformation:us-east-1:533267346877:stack/amplify-semicolons-semicolon-172226/5d37e710-cf1d-11ee-ba61-128074fe0d63",
+      "AmplifyAppId": "d16rfal1gd1yv2"
+    },
+    "categories": {
+      "auth": {
+        "semicolonsdd49bc58": {},
+        "userPoolGroups": {}
+      }
+    }
+  }
+}

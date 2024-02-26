@@ -1,0 +1,94 @@
+{
+  "chat": [
+    {
+      "from": {
+        "type": "user"
+      },
+      "msg": {
+        "message": "Hello"
+      },
+      "id": "3f03"
+    },
+    {
+      "from": {
+        "type": "gpt"
+      },
+      "msg": {
+        "message": "Hi"
+      },
+      "id": "27f6"
+    },
+    {
+      "from": {
+        "type": "user"
+      },
+      "msg": {
+        "message": "What plans for today?"
+      },
+      "id": "78c7"
+    },
+    {
+      "from": {
+        "type": "gpt"
+      },
+      "msg": {
+        "message": "Nothing much. How about you?"
+      },
+      "id": "713b"
+    },
+    {
+      "from": {
+        "type": "user"
+      },
+      "msg": {
+        "message": "Planning to go to a movie. Wanna come?"
+      },
+      "id": "a122"
+    },
+    {
+      "from": {
+        "type": "gpt"
+      },
+      "msg": {
+        "message": "Sure why not."
+      },
+      "id": "5d25"
+    },
+    {
+      "from": {
+        "type": "user"
+      },
+      "msg": {
+        "message": "Great. see you then."
+      },
+      "id": "c86c"
+    },
+    {
+      "from": {
+        "type": "gpt"
+      },
+      "msg": {
+        "message": "ya bye."
+      },
+      "id": "e062"
+    },
+    {
+      "id": "3817",
+      "from": {
+        "type": "gpt"
+      },
+      "msg": {
+        "message": "Okay"
+      }
+    },
+    {
+      "id": "df54",
+      "from": {
+        "type": "gpt"
+      },
+      "msg": {
+        "message": "Hii Om Here!"
+      }
+    }
+  ]
+}
