@@ -12,7 +12,6 @@ jobs:
     env:
       STACK_NAME: aischolar-stack
       AWS_REGION: us-east-1
-      LAMBDA_LAYERS_BUCKET: "${{ env.STACK_NAME }}-lambda-layer"
 
     steps:
       - name: Checkout repository
