@@ -95,7 +95,7 @@ Resources:
       DistributionConfig:
         Enabled: true
         Origins:
-        - Id: S3Origin
+        - Id: !GetAtt FrontendBucket.DomainName
           DomainName: !GetAtt FrontendBucket.DomainName
           S3OriginConfig:
             OriginAccessIdentity: ''
@@ -103,6 +103,7 @@ Resources:
         DefaultCacheBehavior:
           TargetOriginId: S3Origin
           ViewerProtocolPolicy: redirect-to-https
+          CachePolicyId: '658327ea-f89d-4fab-a63d-7e88639e58f6'
           AllowedMethods:
             - GET
             - HEAD
