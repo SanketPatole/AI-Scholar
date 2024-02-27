@@ -616,3 +616,15 @@ Outputs:
     Description: The CloudFront Distribution ID
     Value: !Ref CloudFrontDistribution
 
+  DoubtSolvingApiEndpoint:
+    Description: "Endpoint URL for Doubt Solving API"
+    Value: !Sub "https://${DoubtSolvingAPI}.execute-api.${AWS::Region}.amazonaws.com/prod"
+  
+  NotesGenerationApiEndpoint:
+    Description: "Endpoint URL for Notes Generation API"
+    Value: !Sub "https://${NotesGenerationAPI}.execute-api.${AWS::Region}.amazonaws.com/prod"
+  
+  TestGenerationApiEndpoint:
+    Description: "Endpoint URL for Test Generation API"
+    Value: !Sub "https://${TestGenerationAPI}.execute-api.${AWS::Region}.amazonaws.com/prod"
+

@@ -80,6 +80,24 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+
+      - name: Retrieve API Endpoints
+        id: get-urls
+        run: |
+          echo "DOUBT_SOLVING_API=$(aws cloudformation describe-stacks --stack-name YourStackName --query "Stacks[0].Outputs[?OutputKey=='DoubtSolvingApiEndpoint'].OutputValue" --output text)" >> $GITHUB_ENV
+          echo "NOTES_GENERATION_API=$(aws cloudformation describe-stacks --stack-name YourStackName --query "Stacks[0].Outputs[?OutputKey=='NotesGenerationApiEndpoint'].OutputValue" --output text)" >> $GITHUB_ENV
+          echo "TEST_GENERATION_API=$(aws cloudformation describe-stacks --stack-name YourStackName --query "Stacks[0].Outputs[?OutputKey=='TestGenerationApiEndpoint'].OutputValue" --output text)" >> $GITHUB_ENV
+      
+      - name: Update apiEndpoints.js
+        run: |
+          echo "const apiEndpoints = {
+            doubtSolvingAPI: '${{ env.DOUBT_SOLVING_API }}',
+            notesGenerationAPI: '${{ env.NOTES_GENERATION_API }}',
+            testGenerationAPI: '${{ env.TEST_GENERATION_API }}',
+          };
+          export default apiEndpoints;" > src/Frontend/src/config/apiEndpoints.js
+
+
       - name: Retrieve CloudFront Distribution and OAI IDs
         id: get_ids
         run: |

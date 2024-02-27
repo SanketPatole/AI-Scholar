@@ -202,6 +202,7 @@ import { signOut } from 'aws-amplify/auth';
 import ChatBot from '@/components/ChatBot.vue';
 import axios from 'axios';
 import Dialog from 'primevue/dialog';
+import apiEndpoints from '@/config/apiEndpoints';
 
 export default {
     components: {
@@ -1153,7 +1154,7 @@ export default {
             else if (this.currentClass.length > 0 && this.currentSubject.length > 0 && this.currentChapter.length > 0) {
                 this.loadingSpinner = true;
                 let queryParams = `?class=${this.currentClass}&subject=${this.currentSubject}&chapter=${this.currentChapter}`
-                axios.get(`https://89opn429x6.execute-api.us-east-1.amazonaws.com/default/Notes_Generation` + queryParams).then((response) => {
+                axios.get(`${apiEndpoints.notesGeneration}` + queryParams).then((response) => {
                     let count = 1;
                     this.revisonNotesArr = response.data;
                     this.revisonNotesArr.forEach((note) => {
@@ -1176,7 +1177,7 @@ export default {
         async sendMessage(message) {
             if (message.length > 0) {
                 let queryParams = `?class=${this.currentClass}&subject=${this.currentSubject}&chapter=${this.currentChapter}&message=${message}`
-                await axios.get(`https://0em0ebzuqf.execute-api.us-east-1.amazonaws.com/default/Doubt_Solving` + queryParams).then((response) => {
+                await axios.get(`${apiEndpoints.doubtSolving}` + queryParams).then((response) => {
                     console.log(response.data);
                     let msgArr1 = {
                         "from": {
@@ -1217,7 +1218,7 @@ export default {
             else if (this.currentClass.length > 0 && this.currentSubject.length > 0 && this.currentChapter.length > 0) {
                  this.loadingSpinner = true;
                 let queryParams = `?class=${this.currentClass}&subject=${this.currentSubject}&chapter=${this.currentChapter}`
-                axios.get(`https://9eg8b2emwc.execute-api.us-east-1.amazonaws.com/default/Test_Generation` + queryParams).then((response) => {
+                axios.get(`${apiEndpoints.testGeneration}` + queryParams).then((response) => {
                     this.questionsAnswersObj = response.data;
                     console.log(this.questionsAnswersObj);
                     this.loadingSpinner = false;
