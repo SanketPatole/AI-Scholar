@@ -38,30 +38,30 @@ Resources:
     Properties:
       BucketName: frontend-aischolar
 
-  Doubt_Solving_Api:
+  DoubtSolvingAPI:
     Type: AWS::Serverless::Api
     Properties:
-      Name: Doubt_Solving_Api
+      Name: DoubtSolvingAPI
       StageName: prod
       Cors:
         AllowMethods: "'GET,POST,OPTIONS'"
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
         AllowOrigin: "'*'"
 
-  Notes_Generation_Api:
+  NotesGenerationAPI:
     Type: AWS::Serverless::Api
     Properties:
-      Name: Notes_Generation_Api
+      Name: NotesGenerationAPI
       StageName: prod
       Cors:
         AllowMethods: "'GET,POST,OPTIONS'"
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
         AllowOrigin: "'*'"
 
-  Test_Generation_Api:
+  TestGenerationAPI:
     Type: AWS::Serverless::Api
     Properties:
-      Name: Test_Generation_Api
+      Name: TestGenerationAPI
       StageName: prod
       Cors:
         AllowMethods: "'GET,POST,OPTIONS'"
@@ -148,14 +148,14 @@ Resources:
             Path: /Doubt_Solving
             Method: ANY
             RestApiId:
-              Ref: Doubt_Solving_Api
+              Ref: DoubtSolvingAPI
         Api2:
           Type: Api
           Properties:
             Path: /Doubt_Solving
             Method: GET
             RestApiId:
-              Ref: Doubt_Solving_Api
+              Ref: DoubtSolvingAPI
       RuntimeManagementConfig:
         UpdateRuntimeOn: Auto
 
@@ -216,14 +216,14 @@ Resources:
             Path: /Notes_Generation
             Method: ANY
             RestApiId:
-              Ref: Notes_Generation_Api
+              Ref: NotesGenerationAPI
         Api2:
           Type: Api
           Properties:
             Path: /Notes_Generation
             Method: GET
             RestApiId:
-              Ref: Notes_Generation_Api
+              Ref: NotesGenerationAPI
       RuntimeManagementConfig:
         UpdateRuntimeOn: Auto
 
@@ -284,14 +284,14 @@ Resources:
             Path: /Test_Generation
             Method: ANY
             RestApiId:
-              Ref: Test_Generation_Api
+              Ref: TestGenerationAPI
         Api2:
           Type: Api
           Properties:
             Path: /Test_Generation
             Method: GET
             RestApiId:
-              Ref: Test_Generation_Api
+              Ref: TestGenerationAPI
       RuntimeManagementConfig:
         UpdateRuntimeOn: Auto
 
