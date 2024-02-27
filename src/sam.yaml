@@ -89,18 +89,18 @@ Resources:
         SigningBehavior: always
         SigningProtocol: sigv4
 
-  AssetsDistribution:
+  CloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
         Origins:
         - Id: S3Origin
-          DomainName: !GetAtt AssetsBucket.DomainName
+          DomainName: !GetAtt FrontendBucket.DomainName
           S3OriginConfig:
             OriginAccessIdentity: ''
           OriginAccessControlId: !GetAtt CloudFrontOriginAccessControl.Id
 
-  AssetsBucketPolicy:
+  FrontendBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
       Bucket: !Ref FrontendBucket
@@ -113,7 +113,7 @@ Resources:
             Service: cloudfront.amazonaws.com
           Condition:
             StringEquals:
-              AWS:SourceArn: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${AssetsDistribution}
+              AWS:SourceArn: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${CloudFrontDistribution}
 
   DoubtSolving:
     Type: AWS::Serverless::Function
@@ -594,5 +594,5 @@ Resources:
 Outputs:
   CloudFrontDistributionID:
     Description: The CloudFront Distribution ID
-    Value: !Ref AssetsDistribution
+    Value: !Ref CloudFrontDistribution
 
