@@ -40,6 +40,15 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub "${StackName}-frontend"
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders: ['*']
+            AllowedMethods: ['GET', 'HEAD']
+            AllowedOrigins: ['*']
+            ExposeHeaders: ['x-amz-server-side-encryption']
 
   DoubtSolvingAPI:
     Type: AWS::Serverless::Api
@@ -71,6 +80,12 @@ Resources:
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
         AllowOrigin: "'*'"
 
+  MyOAI:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: OAI for accessing S3 from CloudFront
+
   FrontendDistribution:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -82,7 +97,7 @@ Resources:
           - Id: FrontendOrigin
             DomainName: !GetAtt FrontendBucket.DomainName
             S3OriginConfig:
-              OriginAccessIdentity: ''
+              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${MyOAI}'
         DefaultCacheBehavior:
           TargetOriginId: FrontendOrigin
           ViewerProtocolPolicy: redirect-to-https
@@ -93,6 +108,7 @@ Resources:
         ViewerCertificate:
           CloudFrontDefaultCertificate: true
         PriceClass: PriceClass_100
+
 
   DoubtSolving:
     Type: AWS::Serverless::Function
@@ -574,3 +590,7 @@ Outputs:
   CloudFrontDistributionID:
     Description: The CloudFront Distribution ID
     Value: !Ref FrontendDistribution
+
+  MyOAIID:
+    Description: The MyOAI ID
+    Value: !Ref MyOAI

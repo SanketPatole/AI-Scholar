@@ -27,6 +27,15 @@ jobs:
           pip install awscli
           pip install aws-sam-cli
 
+      - name: Fetch AWS Account ID
+        id: fetch_account_id
+        run: |
+          ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
+          echo "ACCOUNT_ID=$ACCOUNT_ID" >> $GITHUB_ENV
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       - name: Set Dynamic Environment Variables
         run: |
           echo "LAMBDA_LAYERS_BUCKET=${StackName}-lambda-layer" >> $GITHUB_ENV
@@ -66,20 +75,48 @@ jobs:
 
       - name: Deploy SAM application
         run: |
-          sam deploy --template-file packaged.yaml --stack-name ${{ env.StackName }} --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND --region ${{ env.AWS_REGION }} --parameter-overrides StackName=${{ env.StackName }} VectorDBLayerVersionArn=${{ env.VECTOR_DB_LAYER_VERSION_ARN }} CommonLayerVersionArn=${{ env.COMMON_LAYER_VERSION_ARN }} 
+          sam deploy --template-file packaged.yaml --stack-name ${{ env.StackName }} --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND --region ${{ env.AWS_REGION }} --parameter-overrides StackName=${{ env.StackName }} VectorDBLayerVersionArn=${{ env.VECTOR_DB_LAYER_VERSION_ARN }} CommonLayerVersionArn=${{ env.COMMON_LAYER_VERSION_ARN }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Retrieve CloudFront Distribution ID
-        id: get_distribution_id
+      - name: Retrieve CloudFront Distribution and OAI IDs
+        id: get_ids
         run: |
-          CLOUDFRONT_DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='CloudFrontDistributionId'].OutputValue" --output text --region ${{ env.AWS_REGION }})
+          CLOUDFRONT_DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='CloudFrontDistributionID'].OutputValue" --output text --region ${{ env.AWS_REGION }})
           echo "CLOUDFRONT_DISTRIBUTION_ID=$CLOUDFRONT_DISTRIBUTION_ID" >> $GITHUB_ENV
           echo "::set-output name=CLOUDFRONT_DISTRIBUTION_ID::$CLOUDFRONT_DISTRIBUTION_ID"
+          
+          MY_OAI_ID=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='MyOAIID'].OutputValue" --output text --region ${{ env.AWS_REGION }})
+          echo "MY_OAI_ID=$MY_OAI_ID" >> $GITHUB_ENV
+          echo "::set-output name=MY_OAI_ID::$MY_OAI_ID"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+
+      - name: Set S3 Bucket Policy for CloudFront Access
+        run: |
+          POLICY=$(cat <<EOF
+          {
+              "Version": "2012-10-17",
+              "Statement": [
+                  {
+                      "Effect": "Allow",
+                      "Principal": {"AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${OAI_ID}"},
+                      "Action": "s3:GetObject",
+                      "Resource": "arn:aws:s3:::${{ env.FRONTEND_BUCKET }}/*"
+                  }
+              ]
+          }
+          EOF
+          )
+          aws s3api put-bucket-policy --bucket ${{ env.FRONTEND_BUCKET }} --policy "$POLICY"
+        env:
+          OAI_ID: ${{ env.OAI_ID }} # Ensure this is defined in your secrets or environment variables
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
@@ -104,12 +141,11 @@ jobs:
       - name: Invalidate CloudFront Distribution
         run: |
           if [ -n "${CLOUDFRONT_DISTRIBUTION_ID}" ]; then
-            aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"
+            aws cloudfront create-invalidation --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
           else
             echo "CloudFront distribution ID not set. Skipping invalidation."
           fi
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          CLOUDFRONT_DISTRIBUTION_ID: ${{ env.CLOUDFRONT_DISTRIBUTION_ID }}
 
