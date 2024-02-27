@@ -49,6 +49,28 @@ Resources:
             AllowedMethods: ['GET', 'HEAD']
             AllowedOrigins: ['*']
 
+  ApiGatewayExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: apigateway.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: ApiGatewayLogsPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+
   DoubtSolvingAPI:
     Type: AWS::Serverless::Api
     Properties:
@@ -58,6 +80,9 @@ Resources:
         AllowMethods: "'GET,POST,OPTIONS'"
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
         AllowOrigin: "'*'"
+      Auth:
+        DefaultAuthorizer: NONE
+        InvokeRole: !GetAtt ApiGatewayExecutionRole.Arn
 
   NotesGenerationAPI:
     Type: AWS::Serverless::Api
@@ -68,6 +93,9 @@ Resources:
         AllowMethods: "'GET,POST,OPTIONS'"
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
         AllowOrigin: "'*'"
+      Auth:
+        DefaultAuthorizer: NONE
+        InvokeRole: !GetAtt ApiGatewayExecutionRole.Arn
 
   TestGenerationAPI:
     Type: AWS::Serverless::Api
@@ -78,6 +106,10 @@ Resources:
         AllowMethods: "'GET,POST,OPTIONS'"
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
         AllowOrigin: "'*'"
+      Auth:
+        DefaultAuthorizer: NONE
+        InvokeRole: !GetAtt ApiGatewayExecutionRole.Arn
+
 
   CloudFrontOriginAccessControl:
     Type: AWS::CloudFront::OriginAccessControl
