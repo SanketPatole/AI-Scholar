@@ -94,7 +94,7 @@ Resources:
   DoubtSolving:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: Backend/Lambda/Features/Doubt_Solving/
+      CodeUri: src/Backend/Lambda/Features/Doubt_Solving/
       Description: ''
       MemorySize: 512
       Timeout: 900
@@ -162,7 +162,7 @@ Resources:
   NotesGeneration:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: Backend/Lambda/Features/Notes_Generation/
+      CodeUri: src/Backend/Lambda/Features/Notes_Generation/
       Description: ''
       MemorySize: 512
       Timeout: 900
@@ -230,7 +230,7 @@ Resources:
   TestGeneration:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: Backend/Lambda/Features/Test_Generation/
+      CodeUri: src/Backend/Lambda/Features/Test_Generation/
       Description: ''
       MemorySize: 512
       Timeout: 900
@@ -298,7 +298,7 @@ Resources:
   RawDataToDynamoDB:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: Backend/Lambda/Admin/Raw_Data_To_DynamoDB/
+      CodeUri: src/Backend/Lambda/Admin/Raw_Data_To_DynamoDB/
       Description: ''
       MemorySize: 512
       Timeout: 900
@@ -432,7 +432,7 @@ Resources:
   DynamoDBToVectorDB:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: Backend/Lambda/Admin/DynamoDB_To_VectorDB/
+      CodeUri: src/Backend/Lambda/Admin/DynamoDB_To_VectorDB/
       Description: ''
       MemorySize: 512
       Timeout: 900
