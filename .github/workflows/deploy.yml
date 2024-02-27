@@ -33,6 +33,7 @@ jobs:
       - name: Upload Lambda Layer ZIP to S3
         run: |
           aws s3 ls "s3://${{ env.LAMBDA_LAYERS_BUCKET }}" || aws s3 mb "s3://${{ env.LAMBDA_LAYERS_BUCKET }}"
+          aws s3 ls "s3://${{ env.SAM_DEPLOYMENT_BUCKET }}" || aws s3 mb "s3://${{ env.SAM_DEPLOYMENT_BUCKET }}"
           aws s3 cp src/Backend/Lambda\ Layer/vector_db.zip s3://${{ env.LAMBDA_LAYERS_BUCKET }}/vector_db.zip
           aws s3 cp src/Backend/Lambda\ Layer/common_layer.zip s3://${{ env.LAMBDA_LAYERS_BUCKET }}/common_layer.zip
         env:
