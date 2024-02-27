@@ -93,6 +93,7 @@ Resources:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
+        Enabled: true
         Origins:
         - Id: S3Origin
           DomainName: !GetAtt FrontendBucket.DomainName
