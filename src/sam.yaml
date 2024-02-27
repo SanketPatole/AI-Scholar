@@ -84,7 +84,7 @@ Resources:
     Properties: 
       OriginAccessControlConfig:
         Description: Default Origin Access Control
-        Name: !Ref AWS::StackName
+        Name: !GetAtt FrontendBucket.DomainName
         OriginAccessControlOriginType: s3
         SigningBehavior: always
         SigningProtocol: sigv4
