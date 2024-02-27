@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      LAMBDA_LAYERS_BUCKET: lambda-layer-aischolar
-      FRONTEND_BUCKET: frontend-aischolar
-      SAM_DEPLOYMENT_BUCKET: sam-deployment-aischolar
       STACK_NAME: aischolar-stack
       AWS_REGION: us-east-1
+      LAMBDA_LAYERS_BUCKET: "${{ env.STACK_NAME }}-lambda-layer"
+      FRONTEND_BUCKET: "${{ env.STACK_NAME }}-frontend"
+      SAM_DEPLOYMENT_BUCKET: "${{ env.STACK_NAME }}-sam-deployment"
 
     steps:
       - name: Checkout repository
@@ -36,9 +36,6 @@ jobs:
           aws s3 ls "s3://${{ env.SAM_DEPLOYMENT_BUCKET }}" || aws s3 mb "s3://${{ env.SAM_DEPLOYMENT_BUCKET }}"
           aws s3 cp src/Backend/Lambda\ Layer/vector_db.zip s3://${{ env.LAMBDA_LAYERS_BUCKET }}/vector_db.zip
           aws s3 cp src/Backend/Lambda\ Layer/common_layer.zip s3://${{ env.LAMBDA_LAYERS_BUCKET }}/common_layer.zip
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Publish Lambda Layer from S3
         run: |
@@ -46,25 +43,16 @@ jobs:
           COMMON_LAYER_VERSION_ARN=$(aws lambda publish-layer-version --layer-name common_layer --description "Common Layer" --content S3Bucket=${{ env.LAMBDA_LAYERS_BUCKET }},S3Key=common_layer.zip --compatible-runtimes python3.9 --region ${{ env.AWS_REGION }} --query LayerVersionArn --output text)
           echo "VECTOR_DB_LAYER_VERSION_ARN=$VECTOR_DB_LAYER_VERSION_ARN" >> $GITHUB_ENV
           echo "COMMON_LAYER_VERSION_ARN=$COMMON_LAYER_VERSION_ARN" >> $GITHUB_ENV
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Build SAM application
         run: sam build --template-file src/sam.yaml --base-dir . --use-container
 
       - name: Package SAM application
-        run: sam package --output-template-file packaged.yaml --s3-bucket ${{ env.SAM_DEPLOYMENT_BUCKET }} --region us-east-1
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: sam package --output-template-file packaged.yaml --s3-bucket ${{ env.SAM_DEPLOYMENT_BUCKET }} --region ${{ env.AWS_REGION }}
 
       - name: Deploy SAM application
         run: |
           sam deploy --template-file packaged.yaml --stack-name ${{ env.STACK_NAME }} --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND --region ${{ env.AWS_REGION }} --parameter-overrides VectorDBLayerVersionArn=${{ env.VECTOR_DB_LAYER_VERSION_ARN }} CommonLayerVersionArn=${{ env.COMMON_LAYER_VERSION_ARN }}
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Retrieve CloudFront Distribution ID
         id: get_distribution_id
@@ -72,9 +60,6 @@ jobs:
           CLOUDFRONT_DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name ${{ env.STACK_NAME }} --query "Stacks[0].Outputs[?OutputKey=='CloudFrontDistributionId'].OutputValue" --output text --region ${{ env.AWS_REGION }})
           echo "CLOUDFRONT_DISTRIBUTION_ID=$CLOUDFRONT_DISTRIBUTION_ID" >> $GITHUB_ENV
           echo "::set-output name=CLOUDFRONT_DISTRIBUTION_ID::$CLOUDFRONT_DISTRIBUTION_ID"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v2

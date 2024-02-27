@@ -3,6 +3,9 @@ Transform: AWS::Serverless-2016-10-31
 Description: An AWS Serverless Application Model template describing your function.
 
 Parameters:
+  STACK_NAME:
+    Type: String
+    Description: The name of the stack to prefix to resources
   VectorDBLayerVersionArn:
     Type: String
     Description: ARN of the Lambda layer
@@ -15,7 +18,7 @@ Resources:
   MyDynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: Raw_Data_S3
+      TableName: !Sub "${StackName}-Raw_Data_S3"
       AttributeDefinitions:
         - AttributeName: CLASS_SUBJECT
           AttributeType: S
@@ -31,17 +34,17 @@ Resources:
   VectorStoresAIScholarBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: vectorstores-aischolar
+      BucketName: !Sub "${StackName}-vectorstores-aischolar"
 
   FrontendBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: frontend-aischolar
+      BucketName: !Sub "${StackName}-frontend-aischolar"
 
   DoubtSolvingAPI:
     Type: AWS::Serverless::Api
     Properties:
-      Name: DoubtSolvingAPI
+      Name: !Sub "${StackName}-DoubtSolvingAPI"
       StageName: prod
       Cors:
         AllowMethods: "'GET,POST,OPTIONS'"
@@ -51,7 +54,7 @@ Resources:
   NotesGenerationAPI:
     Type: AWS::Serverless::Api
     Properties:
-      Name: NotesGenerationAPI
+      Name: !Sub "${StackName}-NotesGenerationAPI"
       StageName: prod
       Cors:
         AllowMethods: "'GET,POST,OPTIONS'"
@@ -61,7 +64,7 @@ Resources:
   TestGenerationAPI:
     Type: AWS::Serverless::Api
     Properties:
-      Name: TestGenerationAPI
+      Name: !Sub "${StackName}-TestGenerationAPI"
       StageName: prod
       Cors:
         AllowMethods: "'GET,POST,OPTIONS'"
@@ -94,6 +97,7 @@ Resources:
   DoubtSolving:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${StackName}-DoubtSolving"
       CodeUri: src/Backend/Lambda/Features/Doubt_Solving/
       Description: ''
       MemorySize: 512
@@ -125,7 +129,7 @@ Resources:
                 - logs:CreateLogStream
                 - logs:PutLogEvents
               Resource:
-                - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Doubt_Solving:*'
+                - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${StackName}-Doubt_Solving:*'
             - Effect: Allow
               Action:
                 - s3:Get*
@@ -162,6 +166,7 @@ Resources:
   NotesGeneration:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${StackName}-NotesGeneration"
       CodeUri: src/Backend/Lambda/Features/Notes_Generation/
       Description: ''
       MemorySize: 512
@@ -193,7 +198,7 @@ Resources:
                 - logs:CreateLogStream
                 - logs:PutLogEvents
               Resource:
-                - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Notes_Generation:*'
+                - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${StackName}-Notes_Generation:*'
             - Effect: Allow
               Action:
                 - s3:Get*
@@ -230,6 +235,7 @@ Resources:
   TestGeneration:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${StackName}-TestGeneration"
       CodeUri: src/Backend/Lambda/Features/Test_Generation/
       Description: ''
       MemorySize: 512
@@ -261,7 +267,7 @@ Resources:
                 - logs:CreateLogStream
                 - logs:PutLogEvents
               Resource:
-                - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Test_Generation:*'
+                - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${StackName}-Test_Generation:*'
             - Effect: Allow
               Action:
                 - s3:Get*
@@ -298,6 +304,7 @@ Resources:
   RawDataToDynamoDB:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${StackName}-RawDataToDynamoDB"
       CodeUri: src/Backend/Lambda/Admin/Raw_Data_To_DynamoDB/
       Description: ''
       MemorySize: 512
@@ -336,7 +343,7 @@ Resources:
                 - logs:CreateLogStream
                 - logs:PutLogEvents
               Resource:
-                - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Raw_Data_To_DynamoDB:*'
+                - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${StackName}-Raw_Data_To_DynamoDB:*'
             - Action:
                 - dynamodb:*
                 - dax:*
@@ -432,6 +439,7 @@ Resources:
   DynamoDBToVectorDB:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: !Sub "${StackName}-DynamoDBToVectorDB"
       CodeUri: src/Backend/Lambda/Admin/DynamoDB_To_VectorDB/
       Description: ''
       MemorySize: 512
@@ -463,7 +471,7 @@ Resources:
                 - logs:CreateLogStream
                 - logs:PutLogEvents
               Resource:
-                - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/DynamoDB_To_VectorDB:*
+                - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${StackName}-DynamoDB_To_VectorDB:*
             - Action:
                 - dynamodb:*
                 - dax:*
