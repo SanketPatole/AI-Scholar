@@ -3,7 +3,7 @@ Transform: AWS::Serverless-2016-10-31
 Description: An AWS Serverless Application Model template describing your function.
 
 Parameters:
-  STACK_NAME:
+  StackName:
     Type: String
     Description: The name of the stack to prefix to resources
   VectorDBLayerVersionArn:

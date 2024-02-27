@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      STACK_NAME: aischolarstack
+      StackName: aischolarstack
       AWS_REGION: us-east-1
 
     steps:
@@ -29,11 +29,11 @@ jobs:
 
       - name: Set Dynamic Environment Variables
         run: |
-          echo "LAMBDA_LAYERS_BUCKET=${STACK_NAME}-lambda-layer" >> $GITHUB_ENV
-          echo "FRONTEND_BUCKET=${STACK_NAME}-frontend" >> $GITHUB_ENV
-          echo "SAM_DEPLOYMENT_BUCKET=${STACK_NAME}-sam-deployment" >> $GITHUB_ENV
+          echo "LAMBDA_LAYERS_BUCKET=${StackName}-lambda-layer" >> $GITHUB_ENV
+          echo "FRONTEND_BUCKET=${StackName}-frontend" >> $GITHUB_ENV
+          echo "SAM_DEPLOYMENT_BUCKET=${StackName}-sam-deployment" >> $GITHUB_ENV
         env:
-          STACK_NAME: ${{ env.STACK_NAME }}
+          StackName: ${{ env.StackName }}
 
       - name: Upload Lambda Layer ZIP to S3
         run: |
@@ -66,7 +66,7 @@ jobs:
 
       - name: Deploy SAM application
         run: |
-          sam deploy --template-file packaged.yaml --stack-name ${{ env.STACK_NAME }} --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND --region ${{ env.AWS_REGION }} --parameter-overrides STACK_NAME=${{ env.STACK_NAME }} VectorDBLayerVersionArn=${{ env.VECTOR_DB_LAYER_VERSION_ARN }} CommonLayerVersionArn=${{ env.COMMON_LAYER_VERSION_ARN }} 
+          sam deploy --template-file packaged.yaml --stack-name ${{ env.StackName }} --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND --region ${{ env.AWS_REGION }} --parameter-overrides StackName=${{ env.StackName }} VectorDBLayerVersionArn=${{ env.VECTOR_DB_LAYER_VERSION_ARN }} CommonLayerVersionArn=${{ env.COMMON_LAYER_VERSION_ARN }} 
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -74,7 +74,7 @@ jobs:
       - name: Retrieve CloudFront Distribution ID
         id: get_distribution_id
         run: |
-          CLOUDFRONT_DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name ${{ env.STACK_NAME }} --query "Stacks[0].Outputs[?OutputKey=='CloudFrontDistributionId'].OutputValue" --output text --region ${{ env.AWS_REGION }})
+          CLOUDFRONT_DISTRIBUTION_ID=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='CloudFrontDistributionId'].OutputValue" --output text --region ${{ env.AWS_REGION }})
           echo "CLOUDFRONT_DISTRIBUTION_ID=$CLOUDFRONT_DISTRIBUTION_ID" >> $GITHUB_ENV
           echo "::set-output name=CLOUDFRONT_DISTRIBUTION_ID::$CLOUDFRONT_DISTRIBUTION_ID"
         env:
