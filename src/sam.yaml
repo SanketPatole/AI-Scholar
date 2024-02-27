@@ -48,7 +48,6 @@ Resources:
           - AllowedHeaders: ['*']
             AllowedMethods: ['GET', 'HEAD']
             AllowedOrigins: ['*']
-            ExposeHeaders: ['x-amz-server-side-encryption']
 
   DoubtSolvingAPI:
     Type: AWS::Serverless::Api
