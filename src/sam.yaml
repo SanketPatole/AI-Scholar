@@ -79,35 +79,41 @@ Resources:
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
         AllowOrigin: "'*'"
 
-  MyOAI:
-    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
-    Properties:
-      CloudFrontOriginAccessIdentityConfig:
-        Comment: OAI for accessing S3 from CloudFront
+  CloudFrontOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties: 
+      OriginAccessControlConfig:
+        Description: Default Origin Access Control
+        Name: !Ref AWS::StackName
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
 
-  FrontendDistribution:
+  AssetsDistribution:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
-        Enabled: true
-        Comment: AI Scholar Frontend Distribution
-        DefaultRootObject: index.html
         Origins:
-          - Id: FrontendOrigin
-            DomainName: !GetAtt FrontendBucket.DomainName
-            S3OriginConfig:
-              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${MyOAI}'
-        DefaultCacheBehavior:
-          TargetOriginId: FrontendOrigin
-          ViewerProtocolPolicy: redirect-to-https
-          ForwardedValues:
-            QueryString: false
-            Cookies:
-              Forward: none
-        ViewerCertificate:
-          CloudFrontDefaultCertificate: true
-        PriceClass: PriceClass_100
+        - Id: S3Origin
+          DomainName: !GetAtt AssetsBucket.DomainName
+          S3OriginConfig:
+            OriginAccessIdentity: ''
+          OriginAccessControlId: !GetAtt CloudFrontOriginAccessControl.Id
 
+  AssetsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref FrontendBucket
+      PolicyDocument:
+        Statement:
+        - Action: s3:GetObject
+          Effect: Allow
+          Resource: !Sub ${FrontendBucket.Arn}/*
+          Principal:
+            Service: cloudfront.amazonaws.com
+          Condition:
+            StringEquals:
+              AWS:SourceArn: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${AssetsDistribution}
 
   DoubtSolving:
     Type: AWS::Serverless::Function
@@ -588,8 +594,5 @@ Resources:
 Outputs:
   CloudFrontDistributionID:
     Description: The CloudFront Distribution ID
-    Value: !Ref FrontendDistribution
+    Value: !Ref AssetsDistribution
 
-  MyOAIID:
-    Description: The MyOAI ID
-    Value: !Ref MyOAI
