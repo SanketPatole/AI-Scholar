@@ -114,6 +114,11 @@ Resources:
             QueryString: false
             Cookies:
               Forward: none
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponsePagePath: '/index.html'
+            ResponseCode: '403'
+            ErrorCachingMinTTL: 10
 
   FrontendBucketPolicy:
     Type: AWS::S3::BucketPolicy
