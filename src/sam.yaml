@@ -11,6 +11,28 @@ Parameters:
     Description: ARN of the Lambda layer
 
 Resources:
+
+  MyDynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Raw_Data_S3
+      AttributeDefinitions:
+        - AttributeName: CLASS_SUBJECT
+          AttributeType: S
+        - AttributeName: CHAPTER
+          AttributeType: S
+      KeySchema:
+        - AttributeName: CLASS_SUBJECT
+          KeyType: HASH  # Partition key
+        - AttributeName: CHAPTER
+          KeyType: RANGE  # Sort key
+      BillingMode: PAY_PER_REQUEST
+
+  VectorStoresAIScholarBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: vectorstores-aischolar
+
   Doubt_Solving_Api:
     Type: AWS::Serverless::Api
     Properties:
@@ -56,7 +78,7 @@ Resources:
         Size: 512
       Environment:
         Variables:
-          BUCKET_NAME: vectorstores-aiaces
+          BUCKET_NAME: !Ref VectorStoresAIScholarBucket
           OPENAI_API_KEY: '{{resolve:ssm:/myapp/openai_api_key:1}}'
       EventInvokeConfig:
         MaximumEventAgeInSeconds: 21600
@@ -124,7 +146,7 @@ Resources:
         Size: 512
       Environment:
         Variables:
-          BUCKET_NAME: vectorstores-aiaces
+          BUCKET_NAME: !Ref VectorStoresAIScholarBucket
           OPENAI_API_KEY: '{{resolve:ssm:/myapp/openai_api_key:1}}'
       EventInvokeConfig:
         MaximumEventAgeInSeconds: 21600
@@ -192,7 +214,7 @@ Resources:
         Size: 512
       Environment:
         Variables:
-          BUCKET_NAME: vectorstores-aiaces
+          BUCKET_NAME: !Ref VectorStoresAIScholarBucket
           OPENAI_API_KEY: '{{resolve:ssm:/myapp/openai_api_key:1}}'
       EventInvokeConfig:
         MaximumEventAgeInSeconds: 21600
@@ -260,7 +282,7 @@ Resources:
         Size: 512
       Environment:
         Variables:
-          DYNAMODB_TABLE_NAME: Raw_Data_S3
+          DYNAMODB_TABLE_NAME: !Ref MyDynamoDBTable
       EventInvokeConfig:
         DestinationConfig: {}
         MaximumEventAgeInSeconds: 1800
@@ -395,8 +417,8 @@ Resources:
         Size: 512
       Environment:
         Variables:
-          BUCKET_NAME: vectorstores-aiaces
-          DYNAMODB_TABLE_NAME: Raw_Data_S3
+          BUCKET_NAME: !Ref VectorStoresAIScholarBucket
+          DYNAMODB_TABLE_NAME: !Ref MyDynamoDBTable
       EventInvokeConfig:
         MaximumEventAgeInSeconds: 21600
         MaximumRetryAttempts: 2
