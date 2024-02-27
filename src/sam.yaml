@@ -91,13 +91,13 @@ Resources:
             - Effect: Allow
               Action:
                 - logs:CreateLogGroup
-              Resource: arn:aws:logs:us-east-1:533267346877:*
+              Resource: !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*
             - Effect: Allow
               Action:
                 - logs:CreateLogStream
                 - logs:PutLogEvents
               Resource:
-                - 'arn:aws:logs:us-east-1:533267346877:log-group:/aws/lambda/Doubt_Solving:*'
+                - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Doubt_Solving:*'
             - Effect: Allow
               Action:
                 - s3:Get*
@@ -110,7 +110,7 @@ Resources:
           Statement:
             - Effect: Allow
               Action: ssm:GetParameter
-              Resource: arn:aws:ssm:us-east-1:533267346877:parameter/myapp/openai_api_key
+              Resource: !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/myapp/openai_api_key
       SnapStart:
         ApplyOn: None
       Events:
@@ -159,13 +159,13 @@ Resources:
             - Effect: Allow
               Action:
                 - logs:CreateLogGroup
-              Resource: arn:aws:logs:us-east-1:533267346877:*
+              Resource: !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*
             - Effect: Allow
               Action:
                 - logs:CreateLogStream
                 - logs:PutLogEvents
               Resource:
-                - 'arn:aws:logs:us-east-1:533267346877:log-group:/aws/lambda/Notes_Generation:*'
+                - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Notes_Generation:*'
             - Effect: Allow
               Action:
                 - s3:Get*
@@ -178,7 +178,7 @@ Resources:
           Statement:
             - Effect: Allow
               Action: ssm:GetParameter
-              Resource: arn:aws:ssm:us-east-1:533267346877:parameter/myapp/openai_api_key
+              Resource: !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/myapp/openai_api_key
       SnapStart:
         ApplyOn: None
       Events:
@@ -227,13 +227,13 @@ Resources:
             - Effect: Allow
               Action:
                 - logs:CreateLogGroup
-              Resource: arn:aws:logs:us-east-1:533267346877:*
+              Resource: !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*
             - Effect: Allow
               Action:
                 - logs:CreateLogStream
                 - logs:PutLogEvents
               Resource:
-                - 'arn:aws:logs:us-east-1:533267346877:log-group:/aws/lambda/Test_Generation:*'
+                - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Test_Generation:*'
             - Effect: Allow
               Action:
                 - s3:Get*
@@ -246,7 +246,7 @@ Resources:
           Statement:
             - Effect: Allow
               Action: ssm:GetParameter
-              Resource: arn:aws:ssm:us-east-1:533267346877:parameter/myapp/openai_api_key
+              Resource: !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/myapp/openai_api_key
       SnapStart:
         ApplyOn: None
       Events:
@@ -302,14 +302,13 @@ Resources:
             - Effect: Allow
               Action:
                 - logs:CreateLogGroup
-              Resource: arn:aws:logs:us-east-1:533267346877:*
+              Resource: !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*
             - Effect: Allow
               Action:
                 - logs:CreateLogStream
                 - logs:PutLogEvents
               Resource:
-                - >-
-                  arn:aws:logs:us-east-1:533267346877:log-group:/aws/lambda/Raw_Data_To_DynamoDB:*
+                - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/Raw_Data_To_DynamoDB:*'
             - Action:
                 - dynamodb:*
                 - dax:*
@@ -430,14 +429,13 @@ Resources:
             - Effect: Allow
               Action:
                 - logs:CreateLogGroup
-              Resource: arn:aws:logs:us-east-1:533267346877:*
+              Resource: !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*
             - Effect: Allow
               Action:
                 - logs:CreateLogStream
                 - logs:PutLogEvents
               Resource:
-                - >-
-                  arn:aws:logs:us-east-1:533267346877:log-group:/aws/lambda/DynamoDB_To_VectorDB:*
+                - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/DynamoDB_To_VectorDB:*
             - Action:
                 - dynamodb:*
                 - dax:*
