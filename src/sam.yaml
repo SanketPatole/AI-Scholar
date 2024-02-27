@@ -33,6 +33,16 @@ Resources:
     Properties:
       BucketName: vectorstores-aischolar
 
+  LambdaLayerBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: lambda-layer-aischolar
+
+  FrontendBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: frontend-aischolar
+
   Doubt_Solving_Api:
     Type: AWS::Serverless::Api
     Properties:
@@ -62,6 +72,29 @@ Resources:
         AllowMethods: "'GET,POST,OPTIONS'"
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
         AllowOrigin: "'*'"
+
+  FrontendDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        Comment: AI Scholar Frontend Distribution
+        DefaultRootObject: index.html
+        Origins:
+          - Id: FrontendOrigin
+            DomainName: !GetAtt FrontendBucket.DomainName
+            S3OriginConfig:
+              OriginAccessIdentity: ''
+        DefaultCacheBehavior:
+          TargetOriginId: FrontendOrigin
+          ViewerProtocolPolicy: redirect-to-https
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: true
+        PriceClass: PriceClass_100
 
   DoubtSolving:
     Type: AWS::Serverless::Function
@@ -532,3 +565,9 @@ Resources:
         ApplyOn: None
       RuntimeManagementConfig:
         UpdateRuntimeOn: Auto
+
+
+Outputs:
+  CloudFrontDistributionID:
+    Description: The CloudFront Distribution ID
+    Value: !Ref FrontendDistribution
