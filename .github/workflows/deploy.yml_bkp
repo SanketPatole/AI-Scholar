@@ -35,6 +35,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: us-east-1
 
+
       - name: Build SAM application
         run: sam build --template-file src/sam.yaml --base-dir . --use-container
 
@@ -48,30 +49,3 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: your-aws-region
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install Node.js dependencies
-        run: npm install
-        working-directory: src/Frontend/
-
-      - name: Build Vue.js application
-        run: npm run build
-        working-directory: src/Frontend/
-
-      - name: Deploy to S3 and CloudFront
-        uses: reggionick/s3-deploy@v3
-        with:
-          folder: src/Frontend/dist
-          bucket: ${{ secrets.AWS_S3_BUCKET_NAME }}
-          bucket-region: us-east-1
-          distribution-folder: /
-          distribution-id: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
-          delete-removed: true
-          no-cache: true
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
