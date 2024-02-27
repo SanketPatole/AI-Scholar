@@ -54,10 +54,16 @@ jobs:
 
       - name: Package SAM application
         run: sam package --output-template-file packaged.yaml --s3-bucket ${{ env.SAM_DEPLOYMENT_BUCKET }} --region us-east-1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Deploy SAM application
         run: |
           sam deploy --template-file packaged.yaml --stack-name ${{ env.STACK_NAME }} --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND --region ${{ env.AWS_REGION }} --parameter-overrides VectorDBLayerVersionArn=${{ env.VECTOR_DB_LAYER_VERSION_ARN }} CommonLayerVersionArn=${{ env.COMMON_LAYER_VERSION_ARN }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Retrieve CloudFront Distribution ID
         id: get_distribution_id
