@@ -99,6 +99,19 @@ Resources:
           S3OriginConfig:
             OriginAccessIdentity: ''
           OriginAccessControlId: !GetAtt CloudFrontOriginAccessControl.Id
+        DefaultCacheBehavior:
+          TargetOriginId: S3Origin
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods:
+            - GET
+            - HEAD
+          CachedMethods:
+            - GET
+            - HEAD
+          ForwardedValues:
+            QueryString: false
+            Cookies:
+              Forward: none
 
   FrontendBucketPolicy:
     Type: AWS::S3::BucketPolicy
