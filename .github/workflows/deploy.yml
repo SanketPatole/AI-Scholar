@@ -13,8 +13,6 @@ jobs:
       STACK_NAME: aischolar-stack
       AWS_REGION: us-east-1
       LAMBDA_LAYERS_BUCKET: "${{ env.STACK_NAME }}-lambda-layer"
-      FRONTEND_BUCKET: "${{ env.STACK_NAME }}-frontend"
-      SAM_DEPLOYMENT_BUCKET: "${{ env.STACK_NAME }}-sam-deployment"
 
     steps:
       - name: Checkout repository
@@ -29,6 +27,14 @@ jobs:
         run: |
           pip install awscli
           pip install aws-sam-cli
+
+      - name: Set Dynamic Environment Variables
+        run: |
+          echo "LAMBDA_LAYERS_BUCKET=${STACK_NAME}-lambda-layer" >> $GITHUB_ENV
+          echo "FRONTEND_BUCKET=${STACK_NAME}-frontend" >> $GITHUB_ENV
+          echo "SAM_DEPLOYMENT_BUCKET=${STACK_NAME}-sam-deployment" >> $GITHUB_ENV
+        env:
+          STACK_NAME: ${{ env.STACK_NAME }}
 
       - name: Upload Lambda Layer ZIP to S3
         run: |
