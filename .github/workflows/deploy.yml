@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      STACK_NAME: aischolar-stack
+      STACK_NAME: aischolarstack
       AWS_REGION: us-east-1
 
     steps:
