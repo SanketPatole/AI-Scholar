@@ -33,11 +33,6 @@ Resources:
     Properties:
       BucketName: vectorstores-aischolar
 
-  LambdaLayerBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: lambda-layer-aischolar
-
   FrontendBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -221,7 +216,7 @@ Resources:
             Path: /Notes_Generation
             Method: ANY
             RestApiId:
-              Ref: Notes_Generation
+              Ref: Notes_Generation_Api
         Api2:
           Type: Api
           Properties:
