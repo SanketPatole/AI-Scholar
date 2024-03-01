@@ -1154,7 +1154,7 @@ export default {
             else if (this.currentClass.length > 0 && this.currentSubject.length > 0 && this.currentChapter.length > 0) {
                 this.loadingSpinner = true;
                 let queryParams = `?class=${this.currentClass}&subject=${this.currentSubject}&chapter=${this.currentChapter}`
-                axios.get(`${apiEndpoints.notesGeneration}` + queryParams).then((response) => {
+                axios.get(`https://i8rczqew63.execute-api.us-east-1.amazonaws.com/prod/Notes_Generation/` + queryParams).then((response) => {
                     let count = 1;
                     this.revisonNotesArr = response.data;
                     this.revisonNotesArr.forEach((note) => {
