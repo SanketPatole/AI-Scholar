@@ -96,20 +96,16 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      
-      - name: Update apiEndpoints.js
+
+      - name: Update WelcomePage.vue with API endpoints
         run: |
-          echo "const apiEndpoints = {
-            doubtSolvingAPI: '${{ env.DOUBT_SOLVING_API }}',
-            notesGenerationAPI: '${{ env.NOTES_GENERATION_API }}',
-            testGenerationAPI: '${{ env.TEST_GENERATION_API }}',
-          };
-          export default apiEndpoints;" > src/Frontend/src/config/apiEndpoints.js
-          echo "These are API endpoints"
-          cat src/Frontend/src/config/apiEndpoints.js
+          sed -i "s|https://placeholder_for_doubt_solving_api|$DOUBT_SOLVING_API|g" src/Frontend/src/views/WelcomePage.vue
+          sed -i "s|https://placeholder_for_notes_generation_api|$NOTES_GENERATION_API|g" src/Frontend/src/views/WelcomePage.vue
+          sed -i "s|https://placeholder_for_test_generation_api|$TEST_GENERATION_API|g" src/Frontend/src/views/WelcomePage.vue
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          DOUBT_SOLVING_API: ${{ steps.get-urls.outputs.DOUBT_SOLVING_API }}
+          NOTES_GENERATION_API: ${{ steps.get-urls.outputs.NOTES_GENERATION_API }}
+          TEST_GENERATION_API: ${{ steps.get-urls.outputs.TEST_GENERATION_API }}
 
 
       - name: Retrieve CloudFront Distribution and OAI IDs

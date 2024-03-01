@@ -670,13 +670,13 @@ Outputs:
 
   DoubtSolvingApiEndpoint:
     Description: "Endpoint URL for Doubt Solving API"
-    Value: !Sub "https://${DoubtSolvingAPI}.execute-api.${AWS::Region}.amazonaws.com/prod"
+    Value: !Sub "https://${DoubtSolvingAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/Doubt_Solving/"
   
   NotesGenerationApiEndpoint:
     Description: "Endpoint URL for Notes Generation API"
-    Value: !Sub "https://${NotesGenerationAPI}.execute-api.${AWS::Region}.amazonaws.com/prod"
+    Value: !Sub "https://${NotesGenerationAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/Notes_Generation/"
   
   TestGenerationApiEndpoint:
     Description: "Endpoint URL for Test Generation API"
-    Value: !Sub "https://${TestGenerationAPI}.execute-api.${AWS::Region}.amazonaws.com/prod"
+    Value: !Sub "https://${TestGenerationAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/Test_Generation/"
 
