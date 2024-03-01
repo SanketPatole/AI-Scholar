@@ -202,7 +202,6 @@ import { signOut } from 'aws-amplify/auth';
 import ChatBot from '@/components/ChatBot.vue';
 import axios from 'axios';
 import Dialog from 'primevue/dialog';
-import apiEndpoints from '@/config/apiEndpoints';
 
 export default {
     components: {
