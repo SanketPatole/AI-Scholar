@@ -37,8 +37,9 @@ def get_urls():
         subjects[int(lines[0].split("=")[2].split(")")[0])] = [lines[i].split('"')[1] for i in range(1, len(lines))]
     url_list = dict()
     for cls in [10, 11, 12]:
-        url_list[cls] = []
+        url_list[cls] = dict()
         for subject in subjects[cls]:
+            url_list[cls][subject] = []
             if subject in excluded_subjects:
                 continue
             lines = source.split(f"""if((document.test.tclass.value=={cls}) && (document.test.tsubject.options[sind].text=="{subject}"))""")[1].split("}")[0].split("\n")
@@ -51,67 +52,68 @@ def get_urls():
                     url = f"https://ncert.nic.in/textbook/pdf/{code}{unitcode}.pdf"
                     url_obj = {'class': cls, 'subject': subject,
                     'chapter': unitcode, 'url': url}
-                    url_list[cls].append(url_obj)
+                    url_list[cls][subject].append(url_obj)
     return url_list
                     
 
 def lambda_handler(event, context):
-        bucket_name = os.environ['BUCKET_NAME']
-        table = os.environ['DYNAMODB_TABLE_NAME']
-        dynamodb = boto3.client('dynamodb')
-        s3 = boto3.client('s3')
+    bucket_name = os.environ['BUCKET_NAME']
+    table = os.environ['DYNAMODB_TABLE_NAME']
+    dynamodb = boto3.client('dynamodb')
+    s3 = boto3.client('s3')
+    
+    mode = "parent"
+    if 'url_list' in event.keys():
+        mode = "child"
         
-        mode = "parent"
-        if 'url_list' in event.keys():
-            mode = "child"
-            
-        if mode == 'parent':
-            print("Code ran in parent mode")
-            client = boto3.client('lambda')
-            url_list = get_urls()
-            for _class in [10, 11, 12] :
+    if mode == 'parent':
+        print("Code ran in parent mode")
+        client = boto3.client('lambda')
+        url_list = get_urls()
+        for _class in url_list:
+            for subject in url_list[_class]:
                 client.invoke(FunctionName="Raw_Data_To_DynamoDB",
                     InvocationType='Event',
-                    Payload=json.dumps({'url_list': url_list[_class]}))
-        
-        elif mode == 'child':
-            print(f"Code ran in child mode for class {event['url_list'][0]['class']}")
-            for url_obj in event['url_list']:
-                time.sleep(5)
-                cls = url_obj['class']
-                subject = url_obj['subject']
-                chapter = url_obj['chapter']
-                url = url_obj['url']
-                s3_folder = f"All Files/{cls}/{subject}"
-                s3_key = f"{s3_folder}/{chapter}.pdf"
+                    Payload=json.dumps({'url_list': url_list[_class][subject]}))
+    
+    elif mode == 'child':
+        print(f"Code ran in child mode for class {event['url_list'][0]['class']}")
+        for url_obj in event['url_list']:
+            time.sleep(5)
+            cls = url_obj['class']
+            subject = url_obj['subject']
+            chapter = url_obj['chapter']
+            url = url_obj['url']
+            s3_folder = f"All Files/{cls}/{subject}"
+            s3_key = f"{s3_folder}/{chapter}.pdf"
 
-                response = dynamodb.get_item(TableName=table,
-                    Key={'CLASS_SUBJECT': {'S': str(cls)+"_"+subject},
-                    'CHAPTER': {'S': chapter}})
-                try:
-                    if 'Item' in response:
-                        print(f"Already Loaded {url}")
-                        continue
-                except Exception as e:
-                    print("Unable to get item")
-                try:
-                    response = urllib.request.urlopen(url)
-                except Exception as e:
-                    print("Unable to download data")
+            response = dynamodb.get_item(TableName=table,
+                Key={'CLASS_SUBJECT': {'S': str(cls)+"_"+subject},
+                'CHAPTER': {'S': chapter}})
+            try:
+                if 'Item' in response:
+                    print(f"Already Loaded {url}")
                     continue
-                data = response.read()
-                pdfreader = PdfReader(io.BytesIO(data))
-                count = len(pdfreader.pages)
-                data = ""
-                for i in range(count):
-                    page = pdfreader.pages[i]
-                    data += page.extract_text()
-                content = data
-                try:
-                    if content:
-                        insert_record_into_dynamodb(dynamodb, str(cls),
-                                str(subject), chapter, content, table)
-                    else:
-                        print("Failed to extract content from pdf.")
-                except Exception as e:
-                    print(f"Unable to insert into dynamodb: {e}")
+            except Exception as e:
+                print("Unable to get item")
+            try:
+                response = urllib.request.urlopen(url)
+            except Exception as e:
+                print("Unable to download data")
+                continue
+            data = response.read()
+            pdfreader = PdfReader(io.BytesIO(data))
+            count = len(pdfreader.pages)
+            data = ""
+            for i in range(count):
+                page = pdfreader.pages[i]
+                data += page.extract_text()
+            content = data
+            try:
+                if content:
+                    insert_record_into_dynamodb(dynamodb, str(cls),
+                            str(subject), chapter, content, table)
+                else:
+                    print("Failed to extract content from pdf.")
+            except Exception as e:
+                print(f"Unable to insert into dynamodb: {e}")

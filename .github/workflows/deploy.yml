@@ -57,7 +57,7 @@ jobs:
       - name: Publish Lambda Layer from S3
         run: |
           VECTOR_DB_LAYER_VERSION_ARN=$(aws lambda publish-layer-version --layer-name vector_db --description "Vector DB Layer" --content S3Bucket=${{ env.LAMBDA_LAYERS_BUCKET }},S3Key=vector_db.zip --compatible-runtimes python3.9 --region ${{ env.AWS_REGION }} --query LayerVersionArn --output text)
-          COMMON_LAYER_VERSION_ARN=$(aws lambda publish-layer-version --layer-name common_layer --description "Common Layer" --content S3Bucket=${{ env.LAMBDA_LAYERS_BUCKET }},S3Key=common_layer.zip --compatible-runtimes python3.9 --region ${{ env.AWS_REGION }} --query LayerVersionArn --output text)
+          COMMON_LAYER_VERSION_ARN=$(aws lambda publish-layer-version --layer-name common_layer --description "Common Layer" --content S3Bucket=${{ env.LAMBDA_LAYERS_BUCKET }},S3Key=common_layer.zip --compatible-runtimes python3.12 --region ${{ env.AWS_REGION }} --query LayerVersionArn --output text)
           echo "VECTOR_DB_LAYER_VERSION_ARN=$VECTOR_DB_LAYER_VERSION_ARN" >> $GITHUB_ENV
           echo "COMMON_LAYER_VERSION_ARN=$COMMON_LAYER_VERSION_ARN" >> $GITHUB_ENV
         env:
