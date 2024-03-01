@@ -84,9 +84,15 @@ jobs:
       - name: Retrieve API Endpoints
         id: get-urls
         run: |
-          echo "DOUBT_SOLVING_API=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='DoubtSolvingApiEndpoint'].OutputValue" --output text)" >> $GITHUB_ENV
-          echo "NOTES_GENERATION_API=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='NotesGenerationApiEndpoint'].OutputValue" --output text)" >> $GITHUB_ENV
-          echo "TEST_GENERATION_API=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='TestGenerationApiEndpoint'].OutputValue" --output text)" >> $GITHUB_ENV
+          DOUBT_SOLVING_API=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='DoubtSolvingApiEndpoint'].OutputValue" --output text --region ${{ env.AWS_REGION }})
+          echo "DOUBT_SOLVING_API=$DOUBT_SOLVING_API" >> $GITHUB_ENV
+          echo "::set-output name=DOUBT_SOLVING_API::$DOUBT_SOLVING_API"
+          DOUBT_SOLVING_API=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='NotesGenerationApiEndpoint'].OutputValue" --output text --region ${{ env.AWS_REGION }})
+          echo "NOTES_GENERATION_API=$NOTES_GENERATION_API" >> $GITHUB_ENV
+          echo "::set-output name=NOTES_GENERATION_API::$NOTES_GENERATION_API"
+          TEST_GENERATION_API=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='TestGenerationApiEndpoint'].OutputValue" --output text --region ${{ env.AWS_REGION }})
+          echo "TEST_GENERATION_API=$TEST_GENERATION_API" >> $GITHUB_ENV
+          echo "::set-output name=TEST_GENERATION_API::$TEST_GENERATION_API"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
