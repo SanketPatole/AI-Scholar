@@ -57,8 +57,8 @@ def get_urls():
                     
 
 def lambda_handler(event, context):
-    bucket_name = os.environ['BUCKET_NAME']
     table = os.environ['DYNAMODB_TABLE_NAME']
+    lambda_name = os.environ['AWS_LAMBDA_FUNCTION_NAME']
     dynamodb = boto3.client('dynamodb')
     s3 = boto3.client('s3')
     
@@ -72,12 +72,12 @@ def lambda_handler(event, context):
         url_list = get_urls()
         for _class in url_list:
             for subject in url_list[_class]:
-                client.invoke(FunctionName="Raw_Data_To_DynamoDB",
+                client.invoke(FunctionName=lambda_name,
                     InvocationType='Event',
                     Payload=json.dumps({'url_list': url_list[_class][subject]}))
     
     elif mode == 'child':
-        print(f"Code ran in child mode for class {event['url_list'][0]['class']}")
+        print(f"Code ran in child mode for class {event['url_list']}")
         for url_obj in event['url_list']:
             time.sleep(5)
             cls = url_obj['class']
