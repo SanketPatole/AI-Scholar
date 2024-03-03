@@ -88,10 +88,10 @@ jobs:
           echo "DynamoDBToVectorDBName=$DynamoDBToVectorDBName" >> $GITHUB_ENV
           echo "Triggerring RawDataToDynamoDB lambda"
           aws lambda invoke --function-name $RawDataToDynamoDBName --invocation-type Event --payload '{}' raw_data_response.json --region ${{ env.AWS_REGION }}
-          cat raw_data_response.json
+          sleep 900
           echo "Triggerring DynamoDBToVectorDB lambda"
           aws lambda invoke --function-name $DynamoDBToVectorDBName --invocation-type Event --payload '{}' raw_data_response.json --region ${{ env.AWS_REGION }}
-          cat raw_data_response.json
+          sleep 900
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -103,9 +103,9 @@ jobs:
           echo "VectorStoresAIScholarBucket=$VectorStoresAIScholarBucket" >> $GITHUB_ENV
           echo "::set-output name=VectorStoresAIScholarBucket::$VectorStoresAIScholarBucket"
           echo "Loading chapters' list"
-          aws s3 cp s3://$VectorStoresAIScholarBucket/dictionary_of_chapters.json dictionary_of_chapters.json
+          aws s3 cp s3://$VectorStoresAIScholarBucket/dictionary_of_chapters.json src/Frontend/src/views/dictionary_of_chapters.json
           chapters_list=`cat dictionary_of_chapters.json`
-          sed -i "s|https://placeholder_for_chapters_list|$chapters_list|g" src/Frontend/src/views/WelcomePage.vue
+          sed -i "s|placeholder_for_chapters_list|$chapters_list|g" src/Frontend/src/views/WelcomePage.vue
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

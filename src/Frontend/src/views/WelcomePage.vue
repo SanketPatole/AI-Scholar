@@ -200,6 +200,7 @@
 <script>
 import { signOut } from 'aws-amplify/auth';
 import ChatBot from '@/components/ChatBot.vue';
+import chaptersList from '@/config/dictionary_of_chapters.json';
 import axios from 'axios';
 import Dialog from 'primevue/dialog';
 
@@ -220,7 +221,7 @@ export default {
             revisonNotesArr: [],
             questionsAnswersObj: {},
             loadingSpinner:false,
-            subjectsArr: placeholder_for_chapters_list,
+            subjectsArr: chaptersList,
             currentClass: '',
             currentSubject: '',
             currentChapter: ''
