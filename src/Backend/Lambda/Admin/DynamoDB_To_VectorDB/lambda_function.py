@@ -40,9 +40,35 @@ def process_entry(entry, s3, bucket_name):
         vectorstore = get_vectorstore(splits)
         vectorstore.save_local(f"/tmp/{cls}/{subject}/{chapter}")
         upload_directory_to_s3(s3, bucket_name, directory_path=f"/tmp/{cls}/{subject}/{chapter}")
-        logger.info(f"Loaded {cls} - {subject} - {chapter}")
     except Exception as e:
         logger.error(f"Error processing entry: {e}", exc_info=True)
+
+def create_dict_chapters_ui(data, s3, bucket_name):
+    dict_for_ui = dict()
+    for entry in data:
+        cls = entry['CLASS_SUBJECT']['S'].split('_')[0]
+        subject = entry['CLASS_SUBJECT']['S'].split('_')[1]
+        chapter = entry['CHAPTER']['S']
+        if cls in dict_for_ui:
+            if subject in dict_for_ui[cls]:
+                dict_for_ui[cls][subject].append([chapter])
+            else:
+                dict_for_ui[cls][subject] = [chapter]
+        else:
+            dict_for_ui[cls] = dict()
+            dict_for_ui[cls][subject] = [chapter]
+    dict_for_ui_final = []
+    for cls in dict_for_ui:
+        d1 = {'name': f"class {cls}", 'code': cls, 'subjects': []}
+        for subject in dict_for_ui[cls]:
+            d2 = {'name': 'English', 'chapters': []}
+            for chapter in dict_for_ui[cls][subject]:
+                d2['chapters'].append({'cname': f"Chapter {chapter}",})
+            d1['subjects'].append(d2)
+        dict_for_ui_final.append(d1)
+    with open('/tmp/dictionary_of_chapters.json', 'w') as f:
+        json.dump(dict_for_ui_final, f, indent=4)
+    upload_directory_to_s3(s3, bucket_name, '/tmp')
 
 def lambda_handler(event, context):
     bucket_name = os.environ['BUCKET_NAME']
@@ -55,9 +81,11 @@ def lambda_handler(event, context):
         time.sleep(3)
         response = dynamodb.scan(TableName=tablename, ExclusiveStartKey=response['LastEvaluatedKey'])
         data.extend(response['Items'])
-    logger.info(f"There are {len(data)} records in dynamodb.")
     
-    with ThreadPoolExecutor(max_workers=2) as executor:
+    print("Creating dictionary of chapters for ui")
+    create_dict_chapters_ui(data, s3, bucket_name)
+    print("Creating vector stores")
+    with ThreadPoolExecutor(max_workers=4) as executor:
         future_to_entry = {executor.submit(process_entry, entry, s3, bucket_name): entry for entry in data}
         for future in as_completed(future_to_entry):
             entry = future_to_entry[future]
@@ -65,5 +93,3 @@ def lambda_handler(event, context):
                 future.result()
             except Exception as exc:
                 logger.error(f'Entry generated an exception: {exc}', exc_info=True)
-    
-    logger.info("All tasks completed.")

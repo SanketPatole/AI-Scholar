@@ -681,3 +681,14 @@ Outputs:
     Description: "Endpoint URL for Test Generation API"
     Value: !Sub "https://${TestGenerationAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/Test_Generation/"
 
+  RawDataToDynamoDBName:
+    Description: "Name of the RawDataToDynamoDB Lambda function"
+    Value: !GetAtt RawDataToDynamoDB.FunctionName
+  
+  DynamoDBToVectorDBName:
+    Description: "Name of the DynamoDBToVectorDB Lambda function"
+    Value: !GetAtt DynamoDBToVectorDB.FunctionName
+
+  VectorStoresAIScholarBucket:
+    Description: "Name of the Vector Stores Bucket"
+    Value: !Ref VectorStoresAIScholarBucket
