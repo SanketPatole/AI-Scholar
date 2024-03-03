@@ -683,11 +683,11 @@ Outputs:
 
   RawDataToDynamoDBName:
     Description: "Name of the RawDataToDynamoDB Lambda function"
-    Value: !GetAtt RawDataToDynamoDB.FunctionName
+    Value: !Sub "${StackName}-RawDataToDynamoDB"
   
   DynamoDBToVectorDBName:
     Description: "Name of the DynamoDBToVectorDB Lambda function"
-    Value: !GetAtt DynamoDBToVectorDB.FunctionName
+    Value: !Sub "${StackName}-DynamoDBToVectorDB"
 
   VectorStoresAIScholarBucket:
     Description: "Name of the Vector Stores Bucket"
