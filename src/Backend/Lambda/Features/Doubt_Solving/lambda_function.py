@@ -105,4 +105,6 @@ def lambda_handler(event, context):
     else:
         result = get_answer(question, llm, subject, int(cls)+6, context)
         result = {"from": {"type": "gpt"}, "msg": {"message": result}, "id": id}
-        return {'statusCode': 200, 'body': json.dumps(result)}
+    return {'statusCode': 200,
+            "headers": {"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Credentials": True},
+            'body': json.dumps(result)}

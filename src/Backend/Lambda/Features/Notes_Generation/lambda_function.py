@@ -124,4 +124,6 @@ def lambda_handler(event, context):
         final_notes.append({'index': index, "note": notes[key]})
         index += 1
     notes = [{'notes': notes[key]} for key in notes]
-    return {'statusCode': 200, 'body': json.dumps(notes)}
+    return {'statusCode': 200,
+            "headers": {"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Credentials": True},
+            'body': json.dumps(notes)}

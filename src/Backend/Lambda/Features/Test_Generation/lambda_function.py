@@ -220,4 +220,6 @@ def lambda_handler(event, context):
         question = get_question_40_words(llm_100tok, subject, int(cls)+6, contexts[i:i+2])
         question_40_words_list.append(question)
     questions['question_40_words'] = question_40_words_list
-    return {'statusCode': 200, 'body': json.dumps(questions)}
+    return {'statusCode': 200,
+            "headers": {"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Credentials": True},
+            'body': json.dumps(questions)}
