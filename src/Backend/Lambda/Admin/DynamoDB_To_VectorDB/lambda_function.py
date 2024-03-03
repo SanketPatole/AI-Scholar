@@ -51,17 +51,18 @@ def create_dict_chapters_ui(data, s3, bucket_name):
         chapter = entry['CHAPTER']['S']
         if cls in dict_for_ui:
             if subject in dict_for_ui[cls]:
-                dict_for_ui[cls][subject].append([chapter])
+                dict_for_ui[cls][subject].append(chapter)
             else:
                 dict_for_ui[cls][subject] = [chapter]
         else:
             dict_for_ui[cls] = dict()
             dict_for_ui[cls][subject] = [chapter]
     dict_for_ui_final = []
-    for cls in dict_for_ui:
+    
+    for cls in sorted(dict_for_ui.keys()):
         d1 = {'name': f"class {cls}", 'code': cls, 'subjects': []}
         for subject in dict_for_ui[cls]:
-            d2 = {'name': 'English', 'chapters': []}
+            d2 = {'name': subject, 'chapters': []}
             for chapter in dict_for_ui[cls][subject]:
                 d2['chapters'].append({'cname': f"Chapter {chapter}",})
             d1['subjects'].append(d2)
@@ -84,6 +85,7 @@ def lambda_handler(event, context):
     
     print("Creating dictionary of chapters for ui")
     create_dict_chapters_ui(data, s3, bucket_name)
+
     print("Creating vector stores")
     with ThreadPoolExecutor(max_workers=4) as executor:
         future_to_entry = {executor.submit(process_entry, entry, s3, bucket_name): entry for entry in data}
