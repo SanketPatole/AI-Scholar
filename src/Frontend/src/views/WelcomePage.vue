@@ -280,7 +280,7 @@ export default {
             if(this.revisonNotesArr.length > 0){
                 this.loadingSpinner = false;
             }
-            else if (this.currentClass.length > 0 && this.currentSubject.length > 0 && this.currentChapter.length > 0) {
+            if (this.currentClass.length > 0 && this.currentSubject.length > 0 && this.currentChapter.length > 0) {
                 this.loadingSpinner = true;
                 let queryParams = `?class=${this.currentClass}&subject=${this.currentSubject}&chapter=${this.currentChapter}`
                 axios.get(`https://placeholder_for_notes_generation_api` + queryParams).then((response) => {
