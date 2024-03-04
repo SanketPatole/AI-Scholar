@@ -81,7 +81,6 @@
                                             <div v-for="QAWithOPtions in qa" :key="QAWithOPtions">
                                                 {{ QAWithOPtions['fill_in_the_blank_statement'] }}
 												<br>
-												<h3 Options</h3>
 												<h3 class="font-semibold">Options.</h3>
                                                 <ol type="a">
                                                     <li>{{ QAWithOPtions['option'] }}</li>
