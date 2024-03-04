@@ -275,11 +275,12 @@ export default {
             }
         },
         executeRevisionNotesFunc() {
+			this.revisonNotesArr = []
             this.visibleNotesGeneration = true;
-            console.log('this.revisonNotesArr: ',this.revisonNotesArr)
-            if(this.revisonNotesArr.length > 0){
-                this.loadingSpinner = false;
-            }
+            //console.log('this.revisonNotesArr: ',this.revisonNotesArr)
+            //if(this.revisonNotesArr.length > 0){
+            //    this.loadingSpinner = false;
+            //}
             if (this.currentClass.length > 0 && this.currentSubject.length > 0 && this.currentChapter.length > 0) {
                 this.loadingSpinner = true;
                 let queryParams = `?class=${this.currentClass}&subject=${this.currentSubject}&chapter=${this.currentChapter}`
