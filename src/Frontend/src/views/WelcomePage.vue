@@ -81,7 +81,7 @@
                                             <div v-for="(QAWithOPtions, index) in qa" :key="QAWithOPtions">
                                                 {{ QAWithOPtions['fill_in_the_blank_statement'] }}
                                                 <ol type="a">
-                                                    <li>{{index > 0 ? 'Option '+index+':' : ''}}:{{ QAWithOPtions['option'] }}</li>
+                                                    <li>{{index > 0 ? 'Option '+index+':' : ''}}{{ QAWithOPtions['option'] }}</li>
                                                 </ol>
 
                                             </div>
