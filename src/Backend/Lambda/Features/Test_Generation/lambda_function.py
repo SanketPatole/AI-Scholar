@@ -9,6 +9,7 @@ from langchain.chains.question_answering import load_qa_chain, LLMChain
 from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.output_parsers import ResponseSchema, StructuredOutputParser
+import concurrent.futures
 
 def download_s3_folder(s3_client, bucket_name, s3_folder, local_dir):
     if not os.path.exists(local_dir):
@@ -181,6 +182,33 @@ def get_fill_in_the_blanks(llm, subject, age, context):
     response_dict = output_parser.parse(response["output_text"])
     return response_dict
 
+def get_questions(contexts, llm_100tok, subject, cls, type_of_question):
+    if type_of_question == 'fill_in_the_blanks':
+        fill_in_the_blanks_list = []
+        for context in contexts[:5]:
+            question = get_fill_in_the_blanks(llm_100tok, subject, int(cls)+6, [context])
+            question = [{'option' if 'option' in key else key: question[key]} for key in question]
+            fill_in_the_blanks_list.append(question)
+        return fill_in_the_blanks_list
+    elif type_of_question == 'true_false':
+        true_false_list = []
+        for context in contexts[5:10]:
+            question = get_true_false_question(llm_100tok, subject, int(cls)+6, [context])
+            true_false_list.append(question)
+        return true_false_list
+    elif type_of_question == 'question_100_words':
+        question_100_words_list = []
+        for i in range(0, 6, 2):
+            question = get_question_100_words(llm_100tok, subject, int(cls)+6, contexts[i:i+2])
+            question_100_words_list.append(question)
+        return question_100_words_list
+    elif type_of_question == 'question_40_words':
+        question_40_words_list = []
+        for i in range(6, 10, 2):
+            question = get_question_40_words(llm_100tok, subject, int(cls)+6, contexts[i:i+2])
+            question_40_words_list.append(question)
+        return question_40_words_list
+
 def lambda_handler(event, context):
     new_event = event['queryStringParameters']
     cls = new_event['class']
@@ -198,28 +226,20 @@ def lambda_handler(event, context):
     new_db = FAISS.load_local('/tmp/vector/', embedding)
     db_query = "What all topics are present in this chapter?"
     contexts = new_db.similarity_search(db_query, k=10)
-    questions = dict()
-    fill_in_the_blanks_list = []
-    for context in contexts[:5]:
-        question = get_fill_in_the_blanks(llm_100tok, subject, int(cls)+6, [context])
-        question = [{'option' if 'option' in key else key: question[key]} for key in question]
-        fill_in_the_blanks_list.append(question)
-    questions['fill_in_the_blanks'] = fill_in_the_blanks_list
-    true_false_list = []
-    for context in contexts[5:10]:
-        question = get_true_false_question(llm_100tok, subject, int(cls)+6, [context])
-        true_false_list.append(question)
-    questions['true_false'] = true_false_list
-    question_100_words_list = []
-    for i in range(0, 6, 2):
-        question = get_question_100_words(llm_100tok, subject, int(cls)+6, contexts[i:i+2])
-        question_100_words_list.append(question)
-    questions['question_100_words'] = question_100_words_list
-    question_40_words_list = []
-    for i in range(6, 10, 2):
-        question = get_question_40_words(llm_100tok, subject, int(cls)+6, contexts[i:i+2])
-        question_40_words_list.append(question)
-    questions['question_40_words'] = question_40_words_list
+    questions = {'fill_in_the_blanks': [], 'true_false': [], 'question_100_words': [], 'question_40_words': []}
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        future_to_key = {
+            executor.submit(get_questions, contexts, llm_100tok, subject, cls, key): key
+            for key in questions.keys()
+        }
+        for future in concurrent.futures.as_completed(future_to_key):
+            key = future_to_key[future]
+            try:
+                questions[key] = future.result()
+            except Exception as exc:
+                print(f'{key} generated an exception: {exc}')
+
     return {'statusCode': 200,
             "headers": {"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Credentials": True},
             'body': json.dumps(questions)}

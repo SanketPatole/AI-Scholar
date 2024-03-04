@@ -89,21 +89,25 @@
 
                                             </div>
                                         </div>
-
-                                        <div v-for=" qa in questionsAnswersObj['question_40_words']" :key="qa" class="mt-6">
-                                            <h3 class="font-semibold">Questions/Answers in 40 Words</h3>
+										<br>
+										<h2 class="font-semibold">B. Please answer following questions in 40-50 words.</h2>
+                                        <div v-for=" (qa, index) in questionsAnswersObj['question_40_words']" :key="qa" class="mt-6">
+                                            <h3 class="font-semibold">Question {{ index + 1 }}.</h3>
                                             <br>
                                             {{ qa['question_40_words'] }}
                                         </div>
-
-                                        <div v-for=" qa in questionsAnswersObj['question_100_words']" :key="qa"
+										<br>
+										<h2 class="font-semibold">C. Please answer following questions in 100-120 words.</h2>
+                                        <div v-for=" (qa, index) in questionsAnswersObj['question_100_words']" :key="qa"
                                             class="mt-6">
-                                            <h3 class="font-semibold">Questions/Answers in 100 Words</h3>
+                                            <h3 class="font-semibold">Question {{ index + 1 }}.</h3>
                                             <br>
                                             {{ qa['question_100_words'] }}
                                         </div>
-                                        <div v-for=" qa in questionsAnswersObj['true_false']" :key="qa" class="mt-6">
-                                            <h3 class="font-semibold">True OR False</h3>
+										<br>
+										<h2 class="font-semibold">D. State if True or False.</h2>
+                                        <div v-for=" (qa, index) in questionsAnswersObj['true_false']" :key="qa" class="mt-6">
+                                            <h3 class="font-semibold">Question {{ index + 1 }}.</h3>
                                             <br>
                                             {{ qa['question'] }}
                                         </div>
