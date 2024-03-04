@@ -75,7 +75,7 @@
                                 <Dialog v-model:visible="visibleTextGeneration" modal header="Test Generation"
                                     :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
                                     <div>
-										<h2 class="font-semibold">A. Fill In the Blanks</h3>
+										<h2 class="font-semibold">A. Fill In the Blanks</h2>
                                         <div v-for=" (qa, index) in questionsAnswersObj['fill_in_the_blanks']" :key="qa" class="mt-6">
                                             <br>
 											<h3 class="font-semibold">Question {{ index + 1 }}.</h3>
