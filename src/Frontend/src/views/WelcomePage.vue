@@ -78,12 +78,10 @@
 										<h2 class="font-semibold">A. Fill In the Blanks</h2>
                                         <div v-for=" (qa, index) in questionsAnswersObj['fill_in_the_blanks']" :key="qa" class="mt-6">
 											<h3 class="font-semibold">Question {{ index + 1 }}.</h3>
-                                            <div v-for="QAWithOPtions in qa" :key="QAWithOPtions">
+                                            <div v-for="(QAWithOPtions, index) in qa" :key="QAWithOPtions">
                                                 {{ QAWithOPtions['fill_in_the_blank_statement'] }}
-												<br>
-												<h3 class="font-semibold">Options.</h3>
                                                 <ol type="a">
-                                                    <li>{{ QAWithOPtions['option'] }}</li>
+                                                    <li>Option {{index}}:{{ QAWithOPtions['option'] }}</li>
                                                 </ol>
 
                                             </div>
