@@ -277,12 +277,12 @@ export default {
         },
         executeRevisionNotesFunc() {
 			this.revisonNotesArr = []
-            this.visibleNotesGeneration = true;
             //console.log('this.revisonNotesArr: ',this.revisonNotesArr)
             //if(this.revisonNotesArr.length > 0){
             //    this.loadingSpinner = false;
             //}
             if (this.currentClass.length > 0 && this.currentSubject.length > 0 && this.currentChapter.length > 0) {
+				this.visibleNotesGeneration = true;
                 this.loadingSpinner = true;
                 let queryParams = `?class=${this.currentClass}&subject=${this.currentSubject}&chapter=${this.currentChapter}`
                 axios.get(`https://placeholder_for_notes_generation_api` + queryParams).then((response) => {
@@ -341,12 +341,12 @@ export default {
             this.chatBotToggle = false
         },
         executeQuestionsAnswersGenerationFunc() {
-            this.visibleTextGeneration = true
 			this.questionsAnswersObj = []
             //if(this.questionsAnswersObj.length > 0){
             //    this.loadingSpinner = false;
             //}
             if (this.currentClass.length > 0 && this.currentSubject.length > 0 && this.currentChapter.length > 0) {
+				this.visibleTextGeneration = true
                  this.loadingSpinner = true;
                 let queryParams = `?class=${this.currentClass}&subject=${this.currentSubject}&chapter=${this.currentChapter}`
                 axios.get(`https://placeholder_for_test_generation_api` + queryParams).then((response) => {
