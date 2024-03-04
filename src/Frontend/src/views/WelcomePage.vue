@@ -74,16 +74,21 @@
                                     @click="executeQuestionsAnswersGenerationFunc">Create Practice Test</button>
                                 <Dialog v-model:visible="visibleTextGeneration" modal header="Test Generation"
                                     :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-										<div>
-											<h2 class="font-semibold">Fill in the blanks</h2>
-											<div v-for="(qa, index) in questionsAnswersObj['fill_in_the_blanks']" :key="`qa-${index}`" class="mt-6">
-												<h3 class="font-semibold">Question {{ index + 1 }}.</h3>
-												<p>{{ qa['fill_in_the_blank_statement'] }}</p>
-												<ol type="a">
-													<li v-for="(option, optionIndex) in qa.options" :key="`option-${optionIndex}`">{{ option }}</li>
-												</ol>
-											</div>
-										</div>
+                                    <div>
+										<h2 class="font-semibold">A. Fill In the Blanks</h3>
+                                        <div v-for=" (qa, index) in questionsAnswersObj['fill_in_the_blanks']" :key="qa" class="mt-6">
+                                            <br>
+											<h3 class="font-semibold">Question {{ index + 1 }}.</h3>
+                                            <div v-for="QAWithOPtions in qa" :key="QAWithOPtions">
+                                                {{ QAWithOPtions['fill_in_the_blank_statement'] }}
+
+                                                <br>
+                                                <ol type="a">
+                                                    <li>{{ QAWithOPtions['option'] }}</li>
+                                                </ol>
+
+                                            </div>
+                                        </div>
 
                                         <div v-for=" qa in questionsAnswersObj['question_40_words']" :key="qa" class="mt-6">
                                             <h3 class="font-semibold">Questions/Answers in 40 Words</h3>
