@@ -9,6 +9,7 @@ from langchain.chains.question_answering import load_qa_chain, LLMChain
 from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.output_parsers import ResponseSchema, StructuredOutputParser
+import concurrent.futures
 
 def download_s3_folder(s3_client, bucket_name, s3_folder, local_dir):
     if not os.path.exists(local_dir):
@@ -111,11 +112,15 @@ def lambda_handler(event, context):
     contexts = new_db.similarity_search(question, k=3)
     summary_list = []
     summaries = ""
-    for context in contexts:
-        summary = get_topic_summary(llm, subject, int(cls)+6, [context])
-        summary_list.append(summary)
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = [executor.submit(get_topic_summary, llm, subject, int(cls)+6, [context]) for context in contexts]
+        for future in concurrent.futures.as_completed(futures):
+            try:
+                summary = future.result()
+                summary_list.append(summary)
+            except Exception as exc:
+                print(f'An exception occurred: {exc}')
     for i in range(len(summary_list)):
-        #summaries += f"\n\nSummary number {i+1}\n"
         summaries += "\n" + summary_list[i].replace(".", ".\n")
     final_notes = []
     index = 1
