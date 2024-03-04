@@ -74,21 +74,16 @@
                                     @click="executeQuestionsAnswersGenerationFunc">Create Practice Test</button>
                                 <Dialog v-model:visible="visibleTextGeneration" modal header="Test Generation"
                                     :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-                                    <div>
-                                        <div v-for=" qa in questionsAnswersObj['fill_in_the_blanks']" :key="qa"
-                                            class="mt-6">
-                                            <h3 class="font-semibold">Fill In the Blanks</h3>
-                                            <br>
-                                            <div v-for="QAWithOPtions in qa" :key="QAWithOPtions">
-                                                {{ QAWithOPtions['fill_in_the_blank_statement'] }}
-
-                                                <br>
-                                                <ol type="A">
-                                                    <li>{{ QAWithOPtions['option'] }}</li>
-                                                </ol>
-
-                                            </div>
-                                        </div>
+										<div>
+											<h2 class="font-semibold">Fill in the blanks</h2>
+											<div v-for="(qa, index) in questionsAnswersObj['fill_in_the_blanks']" :key="`qa-${index}`" class="mt-6">
+												<h3 class="font-semibold">Question {{ index + 1 }}.</h3>
+												<p>{{ qa['fill_in_the_blank_statement'] }}</p>
+												<ol type="a">
+													<li v-for="(option, optionIndex) in qa.options" :key="`option-${optionIndex}`">{{ option }}</li>
+												</ol>
+											</div>
+										</div>
 
                                         <div v-for=" qa in questionsAnswersObj['question_40_words']" :key="qa" class="mt-6">
                                             <h3 class="font-semibold">Questions/Answers in 40 Words</h3>
@@ -341,11 +336,11 @@ export default {
         },
         executeQuestionsAnswersGenerationFunc() {
             this.visibleTextGeneration = true
-
-            if(this.questionsAnswersObj.length > 0){
-                this.loadingSpinner = false;
-            }
-            else if (this.currentClass.length > 0 && this.currentSubject.length > 0 && this.currentChapter.length > 0) {
+			this.questionsAnswersObj = []
+            //if(this.questionsAnswersObj.length > 0){
+            //    this.loadingSpinner = false;
+            //}
+            if (this.currentClass.length > 0 && this.currentSubject.length > 0 && this.currentChapter.length > 0) {
                  this.loadingSpinner = true;
                 let queryParams = `?class=${this.currentClass}&subject=${this.currentSubject}&chapter=${this.currentChapter}`
                 axios.get(`https://placeholder_for_test_generation_api` + queryParams).then((response) => {
