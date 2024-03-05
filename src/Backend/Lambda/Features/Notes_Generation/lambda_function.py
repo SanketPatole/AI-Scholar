@@ -27,7 +27,7 @@ def download_s3_folder(s3_client, bucket_name, s3_folder, local_dir):
 
 def get_notes(summaries, llm, age, subject):
     notes_schema = []
-    for i in range(1, 6):
+    for i in range(1, 11):
         notes_schema.append(ResponseSchema(name=f"note_{i}", description=f"Note number {i} in output, strictly keeping input short notes in mind."))
     output_parser = StructuredOutputParser.from_response_schemas(notes_schema)
     instructions = output_parser.get_format_instructions()
@@ -37,7 +37,7 @@ def get_notes(summaries, llm, age, subject):
     for the subject of {subject}.
     The short notes are included within {delimiter} delimiter.
     The textbook is intended for the students of age {age}.
-    You are supposed to build exactly 5 pointer exam notes for the
+    You are supposed to build exactly 10 pointer exam notes for the
     student keeping only the short notes in mind.
     
     < SHORT NOTES >
@@ -62,14 +62,14 @@ def get_notes(summaries, llm, age, subject):
     return output_parser.parse(response["text"])
 
 def get_topic_summary(llm, subject, age, context):
-    summary = ResponseSchema(name="summary", description="Exactly 5 pointer exam revision notes")
+    summary = ResponseSchema(name="summary", description="Exactly 4 pointer exam revision notes")
     output_parser = StructuredOutputParser.from_response_schemas([summary])
     instructions = output_parser.get_format_instructions()
     prompt_template_text = """
   You will be provided with some part of a chapter from a textbook for the subject of {subject},
   delimited within {delimiter} delimiter.
   The textbook is intended towards students of age {age}.
-  Please write a 3 pointer exam revision notes strictly keeping the chapter part in mind.
+  Please write a 4 pointer exam revision notes strictly keeping the chapter part in mind.
   
   <CHAPTER PART >
   {delimiter}{context}{delimiter}
@@ -109,7 +109,7 @@ def lambda_handler(event, context):
     download_s3_folder(s3, bucket_name, file_key, '/tmp/vector/')
     new_db = FAISS.load_local('/tmp/vector/', embedding)
     question = "What all topics are present in this chapter?"
-    contexts = new_db.similarity_search(question, k=3)
+    contexts = new_db.similarity_search(question, k=5)
     summary_list = []
     summaries = ""
     with concurrent.futures.ThreadPoolExecutor() as executor:
