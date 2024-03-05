@@ -307,9 +307,6 @@ export default {
         },
         async sendMessage(message) {
             if (message.length > 0) {
-                let queryParams = `?class=${this.currentClass}&subject=${this.currentSubject}&chapter=${this.currentChapter}&message=${message}`
-                await axios.get(`https://placeholder_for_doubt_solving_api` + queryParams).then((response) => {
-                    console.log(response.data);
                     let msgArr1 = {
                         "from": {
                             "type": "user"
@@ -320,6 +317,9 @@ export default {
                         }
                     }
                     this.getMessagesArr.push(msgArr1);
+                let queryParams = `?class=${this.currentClass}&subject=${this.currentSubject}&chapter=${this.currentChapter}&message=${message}`
+                await axios.get(`https://placeholder_for_doubt_solving_api` + queryParams).then((response) => {
+                    console.log(response.data);
                     let msgArr2 = {
                         "from": {
                             "type": "gpt"
