@@ -385,8 +385,8 @@ export default {
 body {
   transform: scale(0.8);
   transform-origin: top left;
-  width: 125%; /* Adjust width accordingly */
-  height: 125%; /* You might need to adjust the height as well */
+  width: 100%;
+  height: 100%;
 }
 
 .chatbox-container {
