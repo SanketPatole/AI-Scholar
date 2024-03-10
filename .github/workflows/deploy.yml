@@ -127,7 +127,11 @@ jobs:
         working-directory: src/Frontend/
 
       - name: Build Vue.js application
-        run: npm run build -- --verbose || true; ls -t /home/runner/.npm/_logs/*.log | head -1 | xargs cat
+        run: npm run build -- --verbose || true
+        working-directory: src/Frontend/
+
+      - name: Display log
+        run: ls -t /home/runner/.npm/_logs/*.log | head -1 | xargs cat
         working-directory: src/Frontend/
 
       - name: Deploy Frontend to S3
