@@ -247,7 +247,7 @@ export default {
             location.reload();
         },
 		enterAsGuest() {
-			localStorage.setItem('signedIn',payload.event);
+			localStorage.setItem('signedIn', 'signedIn');
 			location.reload();
 		},
         getCurrentlySelectValue(event) {
