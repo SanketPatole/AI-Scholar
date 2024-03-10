@@ -112,10 +112,6 @@ getChatBoxToggleStatus(event){
     </template>
   </authenticator>
   </div>
-  
-  <div v-if="getAuthState">
-  <button class="btn" @click="goToHome">Go Home</button>
-  </div>
 
 </template>
 
