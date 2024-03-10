@@ -80,22 +80,21 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Invoke preprocessing lambdas
+      - name: Retrieve API Endpoints
+        id: get-urls
         run: |
-          RawDataToDynamoDBName=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='RawDataToDynamoDBName'].OutputValue" --output text --region ${{ env.AWS_REGION }})
-          echo "RawDataToDynamoDBName=$RawDataToDynamoDBName" >> $GITHUB_ENV
-          DynamoDBToVectorDBName=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='DynamoDBToVectorDBName'].OutputValue" --output text --region ${{ env.AWS_REGION }})
-          echo "DynamoDBToVectorDBName=$DynamoDBToVectorDBName" >> $GITHUB_ENV
-          echo "Triggerring RawDataToDynamoDB lambda"
-          aws lambda invoke --function-name $RawDataToDynamoDBName --invocation-type Event --payload '{}' raw_data_response.json --region ${{ env.AWS_REGION }}
-          sleep 900
-          echo "Triggerring DynamoDBToVectorDB lambda"
-          aws lambda invoke --function-name $DynamoDBToVectorDBName --invocation-type Event --payload '{}' raw_data_response.json --region ${{ env.AWS_REGION }}
-          sleep 900
+          DOUBT_SOLVING_API=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='DoubtSolvingApiEndpoint'].OutputValue" --output text --region ${{ env.AWS_REGION }})
+          echo "DOUBT_SOLVING_API=$DOUBT_SOLVING_API" >> $GITHUB_ENV
+          echo "::set-output name=DOUBT_SOLVING_API::$DOUBT_SOLVING_API"
+          NOTES_GENERATION_API=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='NotesGenerationApiEndpoint'].OutputValue" --output text --region ${{ env.AWS_REGION }})
+          echo "NOTES_GENERATION_API=$NOTES_GENERATION_API" >> $GITHUB_ENV
+          echo "::set-output name=NOTES_GENERATION_API::$NOTES_GENERATION_API"
+          TEST_GENERATION_API=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='TestGenerationApiEndpoint'].OutputValue" --output text --region ${{ env.AWS_REGION }})
+          echo "TEST_GENERATION_API=$TEST_GENERATION_API" >> $GITHUB_ENV
+          echo "::set-output name=TEST_GENERATION_API::$TEST_GENERATION_API"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: us-east-1
 
       - name: Update WelcomePage.vue with API endpoints
         run: |
