@@ -160,8 +160,8 @@
             </div>
             <div v-if="getSignedInState" @click="showChatBot">
                 <ChatBot v-if="currentClass && currentSubject && currentChapter"></ChatBot>
-				<div class="arrow-container">
-                    <i class="fas fa-arrow-down"></i>
+				<div class="giphy-arrow-container">
+                    <iframe src="https://giphy.com/embed/UDNftoQb9oYY6x4qoG" width="480" height="480" frameBorder="0" allowFullScreen></iframe>
                 </div>
             </div>
             <div class="chatbox-container" v-if="getSignedInState && chatBotToggle">
@@ -378,7 +378,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
 
 .p-cascadeselect .p-cascadeselect-label.p-placeholder {
@@ -402,30 +402,17 @@ body {
     z-index: 1000;
 }
 
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-30px);
-  }
-  60% {
-    transform: translateY(-15px);
-  }
-}
-
-.arrow-container {
+.giphy-arrow-container {
   position: fixed;
-  bottom: 100px;
-  right: 300px;
-  animation: bounce 1s infinite;
+  bottom: 24px;
+  right: 100px;
   z-index: 1001;
-  cursor: pointer;
+  pointer-events: none;
 }
 
-.arrow-container i {
-  color: #1877F2;
-  font-size: 2rem;
+.giphy-arrow-container iframe {
+  width: 100px;
+  height: 100px;
 }
 
 .p-cascadeselect.p-component.p-inputwrapper {
