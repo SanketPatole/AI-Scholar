@@ -383,7 +383,7 @@ export default {
 }
 
 body {
-  transform: scale(0.8);
+  transform: scale(0.9);
   transform-origin: top left;
   width: 100%;
   height: 100%;
