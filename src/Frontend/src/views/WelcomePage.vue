@@ -161,9 +161,9 @@
             <div v-if="getSignedInState" @click="showChatBot">
                 <ChatBot v-if="currentClass && currentSubject && currentChapter"></ChatBot>
             </div>
-			  <div v-if="currentClass && currentSubject && currentChapter" class="arrow-container" @click="showChatBot">
-				<i class="fas fa-arrow-down"></i>
-			  </div>
+            <div v-if="currentClass && currentSubject && currentChapter" class="arrow-container" @click="showChatBot">
+                <i class="fas fa-arrow-down"></i>
+            </div>
             <div class="chatbox-container" v-if="getSignedInState && chatBotToggle">
                 <div class="container1">
                     <p class="bot-header text-[20px] mt-[19px]">Scholar Assistant <svg xmlns="http://www.w3.org/2000/svg"
