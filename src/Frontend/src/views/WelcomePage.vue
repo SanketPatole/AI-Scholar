@@ -382,6 +382,13 @@ export default {
     color: red !important;
 }
 
+body {
+  transform: scale(0.8);
+  transform-origin: top left;
+  width: 125%; /* Adjust width accordingly */
+  height: 125%; /* You might need to adjust the height as well */
+}
+
 .chatbox-container {
     position: fixed;
     bottom: 24px;
