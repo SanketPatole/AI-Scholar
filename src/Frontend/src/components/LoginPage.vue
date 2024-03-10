@@ -84,9 +84,6 @@ export default{
     console.log(err);
   }
 },
-  showChatBo() {
-	this.chatBotToggle = true;
-  },
 showChatBot(){
   this.chatBotToggle = true
 },
