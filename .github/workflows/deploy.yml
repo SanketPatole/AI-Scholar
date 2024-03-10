@@ -97,33 +97,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: us-east-1
 
-      - name: Load chapters' list for UI
-        run: |
-          VectorStoresAIScholarBucket=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='VectorStoresAIScholarBucket'].OutputValue" --output text --region ${{ env.AWS_REGION }})
-          echo "VectorStoresAIScholarBucket=$VectorStoresAIScholarBucket" >> $GITHUB_ENV
-          echo "::set-output name=VectorStoresAIScholarBucket::$VectorStoresAIScholarBucket"
-          echo "Loading chapters' list"
-          aws s3 cp s3://$VectorStoresAIScholarBucket/dictionary_of_chapters.json src/Frontend/src/config/dictionary_of_chapters.json
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      - name: Retrieve API Endpoints
-        id: get-urls
-        run: |
-          DOUBT_SOLVING_API=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='DoubtSolvingApiEndpoint'].OutputValue" --output text --region ${{ env.AWS_REGION }})
-          echo "DOUBT_SOLVING_API=$DOUBT_SOLVING_API" >> $GITHUB_ENV
-          echo "::set-output name=DOUBT_SOLVING_API::$DOUBT_SOLVING_API"
-          NOTES_GENERATION_API=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='NotesGenerationApiEndpoint'].OutputValue" --output text --region ${{ env.AWS_REGION }})
-          echo "NOTES_GENERATION_API=$NOTES_GENERATION_API" >> $GITHUB_ENV
-          echo "::set-output name=NOTES_GENERATION_API::$NOTES_GENERATION_API"
-          TEST_GENERATION_API=$(aws cloudformation describe-stacks --stack-name ${{ env.StackName }} --query "Stacks[0].Outputs[?OutputKey=='TestGenerationApiEndpoint'].OutputValue" --output text --region ${{ env.AWS_REGION }})
-          echo "TEST_GENERATION_API=$TEST_GENERATION_API" >> $GITHUB_ENV
-          echo "::set-output name=TEST_GENERATION_API::$TEST_GENERATION_API"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
       - name: Update WelcomePage.vue with API endpoints
         run: |
           sed -i "s|https://placeholder_for_doubt_solving_api|$DOUBT_SOLVING_API|g" src/Frontend/src/views/WelcomePage.vue

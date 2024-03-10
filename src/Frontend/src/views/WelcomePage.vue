@@ -17,6 +17,8 @@
                     </div>
                     <a href="#" class="text-white bg-black w-[100px] h-[40px] pt-[8px] font-semibold rounded-3xl"
                         v-if="!getSignedInState" @click="openAuth()">Log In</a>
+					<a href="#" class="text-white bg-black w-[150px] h-[40px] pt-[8px] font-semibold rounded-3xl"
+						v-if="!getSignedInState" @click="enterAsGuest()">Enter as Guest</a>
                     <a href="#" class="text-white bg-black w-[100px] h-[40px] pt-[8px] font-semibold rounded-3xl"
                         v-if="getSignedInState" @click="handleSignOut">Log Out</a>
 
@@ -244,6 +246,10 @@ export default {
             localStorage.setItem('authState', true);
             location.reload();
         },
+		enterAsGuest() {
+			localStorage.setItem('signedIn',payload.event);
+			location.reload();
+		},
         getCurrentlySelectValue(event) {
             this.currentChapter = event['value']['cname'];
 
