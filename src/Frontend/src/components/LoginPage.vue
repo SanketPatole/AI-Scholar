@@ -94,7 +94,7 @@ getChatBoxToggleStatus(event){
   goHome() {
     localStorage.removeItem('authState');
     location.reload();
-  },
+  }
 }
 </script>
 
