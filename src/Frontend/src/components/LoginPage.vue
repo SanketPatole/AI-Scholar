@@ -74,9 +74,6 @@ export default{
     }
   },
   methods:{
-  goToHome() {
-	this.chatBotToggle = true;
-  },
     async currentAuthenticatedUser() {
   try {
     const { username, userId, signInDetails } = await getCurrentUser();
@@ -87,6 +84,9 @@ export default{
     console.log(err);
   }
 },
+  showChatBo() {
+	this.chatBotToggle = true;
+  },
 showChatBot(){
   this.chatBotToggle = true
 },
