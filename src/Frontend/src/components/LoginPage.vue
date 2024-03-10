@@ -74,7 +74,10 @@ export default{
     }
   },
   methods:{
-  async currentAuthenticatedUser() {
+  goToHome() {
+	this.chatBotToggle = true;
+  },
+    async currentAuthenticatedUser() {
   try {
     const { username, userId, signInDetails } = await getCurrentUser();
     console.log(`The username: ${username}`);
@@ -106,10 +109,6 @@ getChatBoxToggleStatus(event){
       <button class="btn" @click="signOut">Sign Out</button>
     </template>
   </authenticator>
-  </div>
-  
-  <div v-if="getAuthState">
-  <button class="btn" @click="signOut">Go Home</button>
   </div>
 
 </template>
