@@ -87,6 +87,10 @@ getChatBoxToggleStatus(event){
   console.log(event);
   this.chatBotToggle = event;
 },
+goHome(){
+  localStorage.removeItem('authState');
+  location.reload();
+},
   }
 }
 </script>
