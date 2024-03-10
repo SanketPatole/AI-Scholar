@@ -405,7 +405,7 @@ body {
 .giphy-arrow-container {
   position: fixed;
   bottom: 24px;
-  right: -52px;
+  right: -62px;
   z-index: 1001;
   pointer-events: none;
   transform: scaleX(-1);
