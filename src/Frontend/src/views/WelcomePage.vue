@@ -161,6 +161,9 @@
             <div v-if="getSignedInState" @click="showChatBot">
                 <ChatBot v-if="currentClass && currentSubject && currentChapter"></ChatBot>
             </div>
+			  <div v-if="currentClass && currentSubject && currentChapter" class="arrow-container" @click="showChatBot">
+				<i class="fas fa-arrow-down"></i>
+			  </div>
             <div class="chatbox-container" v-if="getSignedInState && chatBotToggle">
                 <div class="container1">
                     <p class="bot-header text-[20px] mt-[19px]">Scholar Assistant <svg xmlns="http://www.w3.org/2000/svg"
@@ -375,7 +378,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
 
 .p-cascadeselect .p-cascadeselect-label.p-placeholder {
@@ -383,17 +386,46 @@ export default {
 }
 
 body {
-  transform: scale(0.9);
+  transform: scale(0.95);
   transform-origin: top left;
   width: 100%;
   height: 100%;
 }
+
+
+
 
 .chatbox-container {
     position: fixed;
     bottom: 24px;
     right: 24px;
     z-index: 1000;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+
+.arrow-container {
+  position: fixed;
+  bottom: 100px;
+  right: 50px;
+  animation: bounce 1s infinite;
+  z-index: 1001;
+  cursor: pointer;
+}
+
+.arrow-container i {
+  color: #1877F2;
+  font-size: 2rem;
 }
 
 .p-cascadeselect.p-component.p-inputwrapper {
