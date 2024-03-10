@@ -74,6 +74,11 @@ export default{
     }
   },
   methods:{
+  goToHome() {
+	console.log('Going Home');
+    localStorage.removeItem('authState');
+    location.reload();
+  },
     async currentAuthenticatedUser() {
   try {
     const { username, userId, signInDetails } = await getCurrentUser();
@@ -91,11 +96,6 @@ getChatBoxToggleStatus(event){
   console.log(event);
   this.chatBotToggle = event;
 },
-  goToHome() {
-	console.log('Going Home');
-    localStorage.removeItem('authState');
-    location.reload();
-  },
 }
 </script>
 
@@ -111,6 +111,9 @@ getChatBoxToggleStatus(event){
       <button class="btn" @click="signOut">Sign Out</button>
     </template>
   </authenticator>
+  </div>
+  
+  <div v-if="getAuthState">
   <button class="btn" @click="goToHome">Go Home</button>
   </div>
 
