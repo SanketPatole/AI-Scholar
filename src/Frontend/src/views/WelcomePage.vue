@@ -160,9 +160,9 @@
             </div>
             <div v-if="getSignedInState" @click="showChatBot">
                 <ChatBot v-if="currentClass && currentSubject && currentChapter"></ChatBot>
-            </div>
-            <div v-if="currentClass && currentSubject && currentChapter" class="arrow-container" @click="showChatBot">
-                <i class="fas fa-arrow-down"></i>
+				<div class="arrow-container">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
             </div>
             <div class="chatbox-container" v-if="getSignedInState && chatBotToggle">
                 <div class="container1">
