@@ -92,8 +92,8 @@ getChatBoxToggleStatus(event){
   this.chatBotToggle = event;
 },
   goHome() {
-    localStorage.removeItem('authState');
-    location.reload();
+	console.log('Going Home');
+
   }
 }
 </script>
@@ -110,7 +110,7 @@ getChatBoxToggleStatus(event){
       <button class="btn" @click="signOut">Sign Out</button>
     </template>
   </authenticator>
-
+  <button class="btn" @click="goHome">Go Home</button>
   </div>
 
 </template>
