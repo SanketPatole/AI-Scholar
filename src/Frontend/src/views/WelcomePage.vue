@@ -155,7 +155,7 @@
                 </div>
                 <div class="mt-10 ml-2 flex justify-center">
                     <img src="../assets/studying.png" class="w-[400px] h-[400px]"
-                        alt="Illustration of people engaging in different learning activities, such as reading, using computers, and painting, to represent the variety of courses available.">
+                        alt="Illustration of people engaging in different learning activities, such as reading, using computers, and painting, to represent the variety of courses available">
                 </div>
             </div>
             <div v-if="getSignedInState" @click="showChatBot">
