@@ -107,6 +107,7 @@ goHome(){
       <button class="btn" @click="signOut">Sign Out</button>
     </template>
   </authenticator>
+  <button class="btn" @click="goHome">Go Home</button>
   </div>
 
 </template>
