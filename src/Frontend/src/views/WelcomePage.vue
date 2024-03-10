@@ -248,7 +248,6 @@ export default {
         openAuth() {
             localStorage.setItem('authState', true);
             location.reload();
-			localStorage.removeItem('authState')
         },
 		enterAsGuest() {
 			localStorage.setItem('signedIn', 'signedIn');
