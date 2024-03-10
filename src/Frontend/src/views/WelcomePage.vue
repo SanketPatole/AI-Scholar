@@ -160,7 +160,7 @@
             </div>
             <div v-if="getSignedInState" @click="showChatBot">
                 <ChatBot v-if="currentClass && currentSubject && currentChapter"></ChatBot>
-				<div class="giphy-arrow-container">
+				<div class="giphy-arrow-container" v-if="currentClass && currentSubject && currentChapter">
                     <iframe src="https://giphy.com/embed/UDNftoQb9oYY6x4qoG" width="480" height="480" frameBorder="0" allowFullScreen></iframe>
                 </div>
             </div>
