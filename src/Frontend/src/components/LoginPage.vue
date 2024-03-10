@@ -6,10 +6,8 @@ import config from "../../src/amplifyconfiguration.json";
 import { getCurrentUser } from 'aws-amplify/auth';
 import WelcomePage from '@/views/WelcomePage.vue'
 import store from "@/store/store";
-
 Amplify.configure(config);
 import { Hub } from 'aws-amplify/utils';
-
 Hub.listen('auth', ({ payload }) => {
   switch (payload.event) {
     case 'signedIn':
@@ -58,11 +56,9 @@ export default{
     this.currentAuthenticatedUser();
     console.log(store.state)
   },
-
   updated(){
     this.currentAuthenticatedUser();
   },
-
   computed:{
     getAuthState(){
       if(localStorage.getItem('authState')){
@@ -91,6 +87,7 @@ getChatBoxToggleStatus(event){
   console.log(event);
   this.chatBotToggle = event;
 },
+  }
 }
 </script>
 
@@ -99,7 +96,7 @@ getChatBoxToggleStatus(event){
   <WelcomePage v-if="!getAuthState"  />
 
   <div v-if="getAuthState" class="pt-12">
-    
+
   <authenticator>
     <template v-slot="{ user, signOut }">
       <h1>Hello {{ user.signInDetails }}!</h1>
@@ -121,4 +118,3 @@ getChatBoxToggleStatus(event){
   border-radius: 20px;
 }
 </style>
-
