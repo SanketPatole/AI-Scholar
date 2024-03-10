@@ -127,7 +127,7 @@ jobs:
         working-directory: src/Frontend/
 
       - name: Build Vue.js application
-        run: npm run build -- --verbose || true
+        run: npm run build -- --verbose
         working-directory: src/Frontend/
 
       - name: Display log
