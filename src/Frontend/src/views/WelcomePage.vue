@@ -386,7 +386,7 @@ export default {
 }
 
 body {
-  transform: scale(0.95);
+  transform: scale(0.90);
   transform-origin: top left;
   width: 100%;
   height: 100%;
@@ -417,7 +417,7 @@ body {
 .arrow-container {
   position: fixed;
   bottom: 100px;
-  right: 50px;
+  right: 300px;
   animation: bounce 1s infinite;
   z-index: 1001;
   cursor: pointer;
