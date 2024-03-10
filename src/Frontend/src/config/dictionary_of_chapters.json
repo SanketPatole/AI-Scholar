@@ -1,0 +1,1161 @@
+[
+    {
+        "name": "class 10",
+        "code": "10",
+        "subjects": [
+            {
+                "name": "Health and Physical Education",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    },
+                    {
+                        "cname": "Chapter 08"
+                    },
+                    {
+                        "cname": "Chapter 09"
+                    },
+                    {
+                        "cname": "Chapter 10"
+                    },
+                    {
+                        "cname": "Chapter 11"
+                    },
+                    {
+                        "cname": "Chapter 12"
+                    }
+                ]
+            },
+            {
+                "name": "Mathematics",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    },
+                    {
+                        "cname": "Chapter 08"
+                    },
+                    {
+                        "cname": "Chapter 09"
+                    },
+                    {
+                        "cname": "Chapter 10"
+                    },
+                    {
+                        "cname": "Chapter 11"
+                    },
+                    {
+                        "cname": "Chapter 12"
+                    },
+                    {
+                        "cname": "Chapter 13"
+                    }
+                ]
+            },
+            {
+                "name": "Social Science",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    }
+                ]
+            },
+            {
+                "name": "English",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    },
+                    {
+                        "cname": "Chapter 08"
+                    }
+                ]
+            },
+            {
+                "name": "Science",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "class 11",
+        "code": "11",
+        "subjects": [
+            {
+                "name": "Mathematics",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    },
+                    {
+                        "cname": "Chapter 08"
+                    },
+                    {
+                        "cname": "Chapter 09"
+                    },
+                    {
+                        "cname": "Chapter 10"
+                    },
+                    {
+                        "cname": "Chapter 11"
+                    },
+                    {
+                        "cname": "Chapter 12"
+                    },
+                    {
+                        "cname": "Chapter 13"
+                    }
+                ]
+            },
+            {
+                "name": "Political Science",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    }
+                ]
+            },
+            {
+                "name": "Sociology",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    }
+                ]
+            },
+            {
+                "name": "Business Studies",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    },
+                    {
+                        "cname": "Chapter 08"
+                    },
+                    {
+                        "cname": "Chapter 09"
+                    },
+                    {
+                        "cname": "Chapter 10"
+                    }
+                ]
+            },
+            {
+                "name": "Biology",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    },
+                    {
+                        "cname": "Chapter 08"
+                    },
+                    {
+                        "cname": "Chapter 09"
+                    },
+                    {
+                        "cname": "Chapter 10"
+                    },
+                    {
+                        "cname": "Chapter 11"
+                    },
+                    {
+                        "cname": "Chapter 12"
+                    },
+                    {
+                        "cname": "Chapter 13"
+                    },
+                    {
+                        "cname": "Chapter 14"
+                    }
+                ]
+            },
+            {
+                "name": "Knowledge Traditions Practices of India",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    },
+                    {
+                        "cname": "Chapter 08"
+                    }
+                ]
+            },
+            {
+                "name": "Health and Physical Education",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    },
+                    {
+                        "cname": "Chapter 08"
+                    },
+                    {
+                        "cname": "Chapter 09"
+                    },
+                    {
+                        "cname": "Chapter 10"
+                    }
+                ]
+            },
+            {
+                "name": "Accountancy",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    }
+                ]
+            },
+            {
+                "name": "Geography",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    },
+                    {
+                        "cname": "Chapter 08"
+                    },
+                    {
+                        "cname": "Chapter 09"
+                    },
+                    {
+                        "cname": "Chapter 10"
+                    },
+                    {
+                        "cname": "Chapter 11"
+                    },
+                    {
+                        "cname": "Chapter 12"
+                    },
+                    {
+                        "cname": "Chapter 13"
+                    }
+                ]
+            },
+            {
+                "name": "History",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    }
+                ]
+            },
+            {
+                "name": "English",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    },
+                    {
+                        "cname": "Chapter 08"
+                    },
+                    {
+                        "cname": "Chapter 11"
+                    },
+                    {
+                        "cname": "Chapter 12"
+                    },
+                    {
+                        "cname": "Chapter 13"
+                    },
+                    {
+                        "cname": "Chapter 14"
+                    },
+                    {
+                        "cname": "Chapter 15"
+                    },
+                    {
+                        "cname": "Chapter 16"
+                    },
+                    {
+                        "cname": "Chapter 17"
+                    },
+                    {
+                        "cname": "Chapter 18"
+                    },
+                    {
+                        "cname": "Chapter 19"
+                    },
+                    {
+                        "cname": "Chapter 20"
+                    },
+                    {
+                        "cname": "Chapter 21"
+                    },
+                    {
+                        "cname": "Chapter 22"
+                    }
+                ]
+            },
+            {
+                "name": "Biotechnology",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    },
+                    {
+                        "cname": "Chapter 08"
+                    },
+                    {
+                        "cname": "Chapter 09"
+                    },
+                    {
+                        "cname": "Chapter 10"
+                    },
+                    {
+                        "cname": "Chapter 11"
+                    }
+                ]
+            },
+            {
+                "name": "Physics",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    }
+                ]
+            },
+            {
+                "name": "Chemistry",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    }
+                ]
+            },
+            {
+                "name": "Computers and Communication Technology",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    }
+                ]
+            },
+            {
+                "name": "Informatics Practices",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    }
+                ]
+            },
+            {
+                "name": "Creative Writing and Translation",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    }
+                ]
+            },
+            {
+                "name": "Computer Science",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    },
+                    {
+                        "cname": "Chapter 08"
+                    },
+                    {
+                        "cname": "Chapter 09"
+                    },
+                    {
+                        "cname": "Chapter 10"
+                    }
+                ]
+            },
+            {
+                "name": "Economics",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "class 12",
+        "code": "12",
+        "subjects": [
+            {
+                "name": "Accountancy",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    }
+                ]
+            },
+            {
+                "name": "Geography",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    }
+                ]
+            },
+            {
+                "name": "Political Science",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    }
+                ]
+            },
+            {
+                "name": "Economics",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    }
+                ]
+            },
+            {
+                "name": "Physics",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    }
+                ]
+            },
+            {
+                "name": "Mathematics",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    }
+                ]
+            },
+            {
+                "name": "Informatics Practices",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    }
+                ]
+            },
+            {
+                "name": "English",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 11"
+                    },
+                    {
+                        "cname": "Chapter 12"
+                    },
+                    {
+                        "cname": "Chapter 13"
+                    },
+                    {
+                        "cname": "Chapter 14"
+                    },
+                    {
+                        "cname": "Chapter 15"
+                    },
+                    {
+                        "cname": "Chapter 16"
+                    },
+                    {
+                        "cname": "Chapter 17"
+                    },
+                    {
+                        "cname": "Chapter 18"
+                    }
+                ]
+            },
+            {
+                "name": "Computer Science",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    },
+                    {
+                        "cname": "Chapter 08"
+                    },
+                    {
+                        "cname": "Chapter 09"
+                    },
+                    {
+                        "cname": "Chapter 10"
+                    },
+                    {
+                        "cname": "Chapter 11"
+                    },
+                    {
+                        "cname": "Chapter 12"
+                    }
+                ]
+            },
+            {
+                "name": "History",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    }
+                ]
+            },
+            {
+                "name": "Biotechnology",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    },
+                    {
+                        "cname": "Chapter 08"
+                    },
+                    {
+                        "cname": "Chapter 09"
+                    },
+                    {
+                        "cname": "Chapter 10"
+                    },
+                    {
+                        "cname": "Chapter 11"
+                    },
+                    {
+                        "cname": "Chapter 12"
+                    }
+                ]
+            },
+            {
+                "name": "Sociology",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    }
+                ]
+            },
+            {
+                "name": "Chemistry",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    }
+                ]
+            },
+            {
+                "name": "Business Studies",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    },
+                    {
+                        "cname": "Chapter 07"
+                    }
+                ]
+            },
+            {
+                "name": "Psychology",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    },
+                    {
+                        "cname": "Chapter 04"
+                    },
+                    {
+                        "cname": "Chapter 05"
+                    },
+                    {
+                        "cname": "Chapter 06"
+                    }
+                ]
+            },
+            {
+                "name": "Biology",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    }
+                ]
+            },
+            {
+                "name": "Creative Writing & Translation",
+                "chapters": [
+                    {
+                        "cname": "Chapter 01"
+                    },
+                    {
+                        "cname": "Chapter 02"
+                    },
+                    {
+                        "cname": "Chapter 03"
+                    }
+                ]
+            }
+        ]
+    }
+]
