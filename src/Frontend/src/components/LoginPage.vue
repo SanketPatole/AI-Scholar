@@ -93,7 +93,8 @@ getChatBoxToggleStatus(event){
 },
   goHome() {
 	console.log('Going Home');
-
+    localStorage.removeItem('authState');
+    location.reload();
   }
 }
 </script>
