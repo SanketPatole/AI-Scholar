@@ -405,9 +405,10 @@ body {
 .giphy-arrow-container {
   position: fixed;
   bottom: 24px;
-  right: 100px;
+  right: -52px;
   z-index: 1001;
   pointer-events: none;
+  transform: scaleX(-1);
 }
 
 .giphy-arrow-container iframe {
